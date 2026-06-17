@@ -73,21 +73,18 @@ export default function LoginPage() {
             flexDirection: "column",
             alignItems: "center",
             marginBottom: "32px",
-            gap: "6px",
+            gap: "8px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "28px", lineHeight: 1 }}>⚡</span>
-            <span style={{ fontSize: "22px", fontWeight: 600, color: "#fcfcfc", lineHeight: 1 }}>
-              Volt
-            </span>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo_white.svg" alt="Volt" style={{ height: "26px", width: "auto" }} />
           <p
             style={{
-              fontSize: "13px",
-              color: "rgba(252,252,252,0.5)",
+              fontSize: "12px",
+              color: "rgba(252,252,252,0.4)",
               fontWeight: 500,
-              letterSpacing: "0.01em",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
             }}
           >
             Workspace Manager
@@ -97,20 +94,14 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <label
-              style={{
-                fontSize: "12px",
-                fontWeight: 500,
-                color: "rgba(252,252,252,0.55)",
-              }}
-            >
+            <label style={{ fontSize: "12px", fontWeight: 500, color: "rgba(252,252,252,0.55)" }}>
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@empresa.com"
+              placeholder="you@company.com"
               style={inputStyle}
               onFocus={onFocus}
               onBlur={onBlur}
@@ -118,14 +109,8 @@ export default function LoginPage() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <label
-              style={{
-                fontSize: "12px",
-                fontWeight: 500,
-                color: "rgba(252,252,252,0.55)",
-              }}
-            >
-              Contraseña
+            <label style={{ fontSize: "12px", fontWeight: 500, color: "rgba(252,252,252,0.55)" }}>
+              Password
             </label>
             <input
               type="password"
@@ -156,15 +141,13 @@ export default function LoginPage() {
               fontFamily: "inherit",
             }}
             onMouseEnter={(e) => {
-              if (!loading)
-                (e.currentTarget as HTMLButtonElement).style.background = "#b8ff96";
+              if (!loading) (e.currentTarget as HTMLButtonElement).style.background = "#b8ff96";
             }}
             onMouseLeave={(e) => {
-              if (!loading)
-                (e.currentTarget as HTMLButtonElement).style.background = "#a0ff79";
+              if (!loading) (e.currentTarget as HTMLButtonElement).style.background = "#a0ff79";
             }}
           >
-            {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
 

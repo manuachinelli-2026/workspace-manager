@@ -24,7 +24,7 @@ const MEMBERS: Member[] = [
     hubspot: "linked",
     license: "active",
     hoursSaved: 12,
-    lastActive: "hace 5m",
+    lastActive: "5m ago",
   },
   {
     name: "Santiago Rodríguez",
@@ -35,7 +35,7 @@ const MEMBERS: Member[] = [
     hubspot: "linked",
     license: "active",
     hoursSaved: 9,
-    lastActive: "hace 2h",
+    lastActive: "2h ago",
   },
   {
     name: "Valentina López",
@@ -46,7 +46,7 @@ const MEMBERS: Member[] = [
     hubspot: "pending",
     license: "active",
     hoursSaved: 11,
-    lastActive: "hace 30m",
+    lastActive: "30m ago",
   },
   {
     name: "Nicolás Bravo",
@@ -57,7 +57,7 @@ const MEMBERS: Member[] = [
     hubspot: "pending",
     license: "active",
     hoursSaved: 6,
-    lastActive: "hace 1d",
+    lastActive: "1d ago",
   },
   {
     name: "Camila Torres",
@@ -83,15 +83,7 @@ const MEMBERS: Member[] = [
   },
 ];
 
-function Pill({
-  rgb,
-  label,
-  icon,
-}: {
-  rgb: string;
-  label: string;
-  icon?: string;
-}) {
+function Pill({ rgb, label, icon }: { rgb: string; label: string; icon?: string }) {
   return (
     <span
       style={{
@@ -108,10 +100,7 @@ function Pill({
       }}
     >
       {icon && (
-        <span
-          className="material-symbols-outlined"
-          style={{ fontSize: "12px" }}
-        >
+        <span className="material-symbols-outlined" style={{ fontSize: "12px" }}>
           {icon}
         </span>
       )}
@@ -133,18 +122,16 @@ function StatusCell({ status }: { status: Member["status"] }) {
             flexShrink: 0,
           }}
         />
-        <span style={{ fontSize: "13px", color: "#fcfcfc" }}>Activo</span>
+        <span style={{ fontSize: "13px", color: "#fcfcfc" }}>Active</span>
       </div>
     );
   }
-  return <Pill rgb="59, 130, 246" label="Invitado" />;
+  return <Pill rgb="59, 130, 246" label="Invited" />;
 }
 
 function VoltCloudCell({ value }: { value: Member["voltCloud"] }) {
   if (value === null)
-    return (
-      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>
-    );
+    return <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>;
   if (value === "connected")
     return (
       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
@@ -158,9 +145,7 @@ function VoltCloudCell({ value }: { value: Member["voltCloud"] }) {
         >
           check_circle
         </span>
-        <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.7)" }}>
-          Conectado
-        </span>
+        <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.7)" }}>Connected</span>
       </div>
     );
   return (
@@ -171,18 +156,14 @@ function VoltCloudCell({ value }: { value: Member["voltCloud"] }) {
       >
         radio_button_unchecked
       </span>
-      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.4)" }}>
-        Sin conectar
-      </span>
+      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.4)" }}>Not connected</span>
     </div>
   );
 }
 
 function HubSpotCell({ value }: { value: Member["hubspot"] }) {
   if (value === null)
-    return (
-      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>
-    );
+    return <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>;
   if (value === "linked")
     return (
       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
@@ -196,9 +177,7 @@ function HubSpotCell({ value }: { value: Member["hubspot"] }) {
         >
           check_circle
         </span>
-        <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.7)" }}>
-          Vinculado
-        </span>
+        <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.7)" }}>Linked</span>
       </div>
     );
   return (
@@ -209,17 +188,15 @@ function HubSpotCell({ value }: { value: Member["hubspot"] }) {
       >
         pending
       </span>
-      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.4)" }}>
-        Pendiente
-      </span>
+      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.4)" }}>Pending</span>
     </div>
   );
 }
 
 function LicenseCell({ value }: { value: Member["license"] }) {
   if (value === "active")
-    return <Pill rgb="88, 184, 54" label="Activa" icon="check_circle" />;
-  return <Pill rgb="217, 119, 6" label="Pendiente" icon="pending" />;
+    return <Pill rgb="88, 184, 54" label="Active" icon="check_circle" />;
+  return <Pill rgb="217, 119, 6" label="Pending" icon="pending" />;
 }
 
 function InviteModal({ onClose }: { onClose: () => void }) {
@@ -281,28 +258,17 @@ function InviteModal({ onClose }: { onClose: () => void }) {
             borderRadius: "6px",
           }}
           onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLButtonElement).style.color =
-              "rgba(252,252,252,0.7)")
+            ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.7)")
           }
           onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLButtonElement).style.color =
-              "rgba(252,252,252,0.35)")
+            ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.35)")
           }
         >
-          <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
-            close
-          </span>
+          <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>close</span>
         </button>
 
-        <h2
-          style={{
-            fontSize: "15px",
-            fontWeight: 600,
-            color: "#fcfcfc",
-            marginBottom: "4px",
-          }}
-        >
-          Invitar asesor
+        <h2 style={{ fontSize: "15px", fontWeight: 600, color: "#fcfcfc", marginBottom: "4px" }}>
+          Invite user
         </h2>
         <p
           style={{
@@ -312,7 +278,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
             lineHeight: 1.5,
           }}
         >
-          Ingresá el teléfono o email. El asesor recibirá un link de descarga e invitación.
+          Enter a phone number or email. The user will receive a download link and invitation.
         </p>
 
         <input
@@ -320,13 +286,11 @@ function InviteModal({ onClose }: { onClose: () => void }) {
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          placeholder="+54 11 1234-5678 o email@empresa.com"
+          placeholder="+1 555 123 4567 or user@company.com"
           style={{
             width: "100%",
             background: "rgba(255,255,255,0.04)",
-            border: focused
-              ? "1px solid #a0ff79"
-              : "1px solid rgba(255,255,255,0.1)",
+            border: focused ? "1px solid #a0ff79" : "1px solid rgba(255,255,255,0.1)",
             boxShadow: focused ? "0 0 0 3px rgba(160,255,121,0.18)" : "none",
             borderRadius: "10px",
             padding: "11px 14px",
@@ -357,7 +321,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
             fontFamily: "inherit",
           }}
         >
-          {sent ? "¡Invitación enviada!" : "Enviar invitación"}
+          {sent ? "Invitation sent!" : "Send invitation"}
         </button>
       </div>
     </div>
@@ -367,23 +331,23 @@ function InviteModal({ onClose }: { onClose: () => void }) {
 const STAT_CARDS = [
   {
     icon: "schedule",
-    label: "Horas ahorradas esta semana",
+    label: "Hours saved this week",
     value: "47.5h",
-    sub: "↑ 12% vs semana anterior",
+    sub: "↑ 12% vs last week",
     subColor: "#a0ff79",
   },
   {
     icon: "group",
-    label: "Promedio por asesor",
+    label: "Avg. per user",
     value: "9.5h",
-    sub: "/ semana",
+    sub: "/ week",
     subColor: "rgba(252,252,252,0.4)",
   },
   {
     icon: "credit_card",
-    label: "Licencias activas",
+    label: "Active licenses",
     value: "5 / 6",
-    sub: "1 pendiente de activación",
+    sub: "1 pending activation",
     subColor: "rgb(217,119,6)",
   },
 ];
@@ -414,7 +378,7 @@ export default function TeamPage() {
           marginBottom: "16px",
         }}
       >
-        <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc" }}>Equipo</h1>
+        <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc" }}>Users</h1>
         <button
           onClick={() => setShowInvite(true)}
           style={{
@@ -433,8 +397,7 @@ export default function TeamPage() {
             fontFamily: "inherit",
           }}
           onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLButtonElement).style.background =
-              "rgba(160,255,121,0.08)")
+            ((e.currentTarget as HTMLButtonElement).style.background = "rgba(160,255,121,0.08)")
           }
           onMouseLeave={(e) =>
             ((e.currentTarget as HTMLButtonElement).style.background = "transparent")
@@ -443,7 +406,7 @@ export default function TeamPage() {
           <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>
             person_add
           </span>
-          Invitar asesor
+          Invite user
         </button>
       </div>
 
@@ -512,13 +475,13 @@ export default function TeamPage() {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              <th style={HEADER_CELL_STYLE}>Miembro</th>
-              <th style={HEADER_CELL_STYLE}>Estado</th>
+              <th style={HEADER_CELL_STYLE}>Member</th>
+              <th style={HEADER_CELL_STYLE}>Status</th>
               <th style={HEADER_CELL_STYLE}>Volt Cloud</th>
               <th style={HEADER_CELL_STYLE}>HubSpot</th>
-              <th style={HEADER_CELL_STYLE}>Licencia</th>
-              <th style={HEADER_CELL_STYLE}>Horas ahorradas</th>
-              <th style={HEADER_CELL_STYLE}>Último activo</th>
+              <th style={HEADER_CELL_STYLE}>License</th>
+              <th style={HEADER_CELL_STYLE}>Hours saved</th>
+              <th style={HEADER_CELL_STYLE}>Last active</th>
             </tr>
           </thead>
           <tbody>
@@ -527,12 +490,9 @@ export default function TeamPage() {
                 key={m.name}
                 style={{
                   borderBottom:
-                    i < MEMBERS.length - 1
-                      ? "1px solid rgba(255,255,255,0.06)"
-                      : "none",
+                    i < MEMBERS.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
                 }}
               >
-                {/* Member */}
                 <td style={{ padding: "12px 16px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                     <div
@@ -553,13 +513,7 @@ export default function TeamPage() {
                     >
                       {m.initials}
                     </div>
-                    <span
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        color: "#fcfcfc",
-                      }}
-                    >
+                    <span style={{ fontSize: "13px", fontWeight: 500, color: "#fcfcfc" }}>
                       {m.name}
                     </span>
                   </div>
@@ -578,36 +532,20 @@ export default function TeamPage() {
                 </td>
                 <td style={{ padding: "12px 16px" }}>
                   {m.hoursSaved !== null ? (
-                    <span
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: "#fcfcfc",
-                      }}
-                    >
+                    <span style={{ fontSize: "13px", fontWeight: 600, color: "#fcfcfc" }}>
                       {m.hoursSaved}h
                     </span>
                   ) : (
-                    <span
-                      style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}
-                    >
-                      —
-                    </span>
+                    <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>
                   )}
                 </td>
                 <td style={{ padding: "12px 16px" }}>
                   {m.lastActive ? (
-                    <span
-                      style={{ fontSize: "13px", color: "rgba(252,252,252,0.5)" }}
-                    >
+                    <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.5)" }}>
                       {m.lastActive}
                     </span>
                   ) : (
-                    <span
-                      style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}
-                    >
-                      —
-                    </span>
+                    <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>
                   )}
                 </td>
               </tr>

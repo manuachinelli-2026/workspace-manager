@@ -12,7 +12,7 @@ const INTEGRATIONS: Integration[] = [
   {
     name: "HubSpot",
     description:
-      "Sincronización bidireccional de contactos, deals y actividad de WhatsApp con tu CRM.",
+      "Two-way sync of contacts, deals, and WhatsApp activity with your CRM.",
     icon: "hub",
     connected: true,
     connectedBy: "Admin",
@@ -20,7 +20,7 @@ const INTEGRATIONS: Integration[] = [
   {
     name: "Linear",
     description:
-      "Creá issues de Linear directamente desde conversaciones de WhatsApp.",
+      "Create Linear issues directly from WhatsApp conversations.",
     icon: "linear_scale",
     connected: true,
     connectedBy: "Admin",
@@ -28,28 +28,28 @@ const INTEGRATIONS: Integration[] = [
   {
     name: "Zendesk",
     description:
-      "Convertí chats de WhatsApp en tickets de soporte automáticamente.",
+      "Automatically convert WhatsApp chats into support tickets.",
     icon: "headset_mic",
     connected: false,
   },
   {
     name: "Google Calendar",
     description:
-      "Agendá reuniones y seguimientos directamente desde WhatsApp.",
+      "Schedule meetings and follow-ups directly from WhatsApp.",
     icon: "calendar_month",
     connected: false,
   },
   {
     name: "Slack",
     description:
-      "Recibí notificaciones de chats prioritarios y follow-ups en Slack.",
+      "Receive notifications for priority chats and follow-ups in Slack.",
     icon: "notifications",
     connected: false,
   },
   {
     name: "Pipedrive",
     description:
-      "Sincronizá tu pipeline de ventas con las conversaciones de WhatsApp.",
+      "Sync your sales pipeline with WhatsApp conversations.",
     icon: "insights",
     connected: false,
   },
@@ -83,7 +83,7 @@ export default function AppsPage() {
         <p
           style={{ fontSize: "13px", color: "rgba(252,252,252,0.5)" }}
         >
-          Conectá Volt con tus herramientas de trabajo
+          Connect Volt with your work tools
         </p>
       </div>
 
@@ -193,7 +193,7 @@ export default function AppsPage() {
                         <span
                           style={{ fontSize: "11px", color: "#a0ff79" }}
                         >
-                          Conectado · por {app.connectedBy}
+                          Connected · by {app.connectedBy}
                         </span>
                       </div>
                     )}
@@ -213,7 +213,7 @@ export default function AppsPage() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    Conectado
+                    Connected
                   </span>
                 ) : (
                   <span
@@ -227,7 +227,7 @@ export default function AppsPage() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    No conectado
+                    Not connected
                   </span>
                 )}
               </div>
@@ -286,7 +286,7 @@ export default function AppsPage() {
                     : "transparent";
                 }}
               >
-                {app.connected ? "Gestionar" : "Conectar"}
+                {app.connected ? "Manage" : "Connect"}
               </button>
             </div>
           );

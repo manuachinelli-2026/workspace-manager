@@ -5,9 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
   { label: "CRM View",      href: "/crm",     icon: "table_chart" },
-  { label: "Equipo",        href: "/team",    icon: "group" },
+  { label: "Users",         href: "/team",    icon: "group" },
   { label: "App Store",     href: "/apps",    icon: "extension" },
-  { label: "Facturación",   href: "/billing", icon: "credit_card" },
+  { label: "Billing",       href: "/billing", icon: "credit_card" },
 ] as const;
 
 export default function Sidebar() {

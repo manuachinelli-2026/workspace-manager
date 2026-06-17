@@ -28,7 +28,7 @@ export interface CrmRow {
 }
 
 export const TEAM_MEMBERS = [
-  "Todos",
+  "All",
   "Manuel A.",
   "Santiago R.",
   "Valentina L.",

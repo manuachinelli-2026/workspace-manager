@@ -32,14 +32,14 @@ function initials(name: string) {
 }
 
 export default function CrmPage() {
-  const [activeMember, setActiveMember] = useState("Todos");
+  const [activeMember, setActiveMember] = useState("All");
   const [chatTab, setChatTab] = useState("All chats");
   const [viewTab, setViewTab] = useState("All");
   const [search, setSearch] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
 
   const filteredRows = CRM_ROWS.filter((row) => {
-    if (activeMember !== "Todos" && row.assignedTo !== activeMember) return false;
+    if (activeMember !== "All" && row.assignedTo !== activeMember) return false;
     if (chatTab === "Contacts" && row.isGroup) return false;
     if (chatTab === "Groups" && !row.isGroup) return false;
     if (viewTab === "Needs reply" && row.direction !== "in") return false;
@@ -144,7 +144,7 @@ export default function CrmPage() {
         >
           {TEAM_MEMBERS.map((member) => {
             const active = activeMember === member;
-            const isAll = member === "Todos";
+            const isAll = member === "All";
             const rgb = memberAvatarColor(member);
             return (
               <button
