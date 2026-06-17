@@ -346,20 +346,19 @@ export default function WorkspacePage() {
       </button>
 
       {/* Live stats bar */}
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", padding: "14px 16px", borderRadius: "10px", background: "#282b2e", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px", padding: "18px 24px", borderRadius: "10px", background: "#282b2e", border: "1px solid rgba(255,255,255,0.06)" }}>
         {[
           { value: loading ? "—" : String(members.length), label: "members" },
-          { value: loading ? "—" : String(activeMembers.length), label: "Premium licenses" },
           { value: loading ? "—" : `${connectedCloud}/${members.length}`, label: "Volt Cloud active" },
           { value: loading ? "—" : `${totalHours}h`, label: "saved this week" },
           { value: loading ? "—" : `${avgHours}h`, label: "avg / user" },
         ].map((stat, i, arr) => (
           <div key={stat.label} style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ padding: i === 0 ? "0 24px 0 0" : "0 24px" }}>
-              <span style={{ fontSize: "20px", fontWeight: 600, color: "#fcfcfc" }}>{stat.value}</span>
-              <span style={{ fontSize: "12px", color: "rgba(252,252,252,0.45)", marginLeft: "5px" }}>{stat.label}</span>
+            <div style={{ padding: "0 32px" }}>
+              <span style={{ fontSize: "24px", fontWeight: 600, color: "#fcfcfc" }}>{stat.value}</span>
+              <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.45)", marginLeft: "6px" }}>{stat.label}</span>
             </div>
-            {i < arr.length - 1 && <div style={{ width: "1px", height: "18px", background: "rgba(255,255,255,0.08)" }} />}
+            {i < arr.length - 1 && <div style={{ width: "1px", height: "22px", background: "rgba(255,255,255,0.08)" }} />}
           </div>
         ))}
       </div>
