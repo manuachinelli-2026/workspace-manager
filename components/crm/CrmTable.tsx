@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDown, ArrowUp, MoveUpRight, MoveDownLeft } from "lucide-react";
 import { CrmRow } from "@/lib/crmData";
 import { StagePill, RelPill } from "./CrmPill";
 
@@ -18,8 +17,14 @@ function initials(name: string) {
 }
 
 const AVATAR_COLORS = [
-  "#58b836", "#66baff", "#a855f7", "#f59e0b",
-  "#ec4899", "#14b8a6", "#f97316", "#ef4444",
+  "71, 105, 134",   // team blue
+  "13, 148, 136",   // teal
+  "139, 92, 246",   // purple
+  "217, 119, 6",    // amber
+  "219, 39, 119",   // pink
+  "59, 130, 246",   // blue
+  "234, 88, 12",    // orange
+  "88, 184, 54",    // green
 ];
 
 function avatarColor(name: string) {
@@ -27,6 +32,39 @@ function avatarColor(name: string) {
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
   return AVATAR_COLORS[h % AVATAR_COLORS.length];
 }
+
+/* Exact grid from crm.scss */
+const GRID_TEMPLATE =
+  "minmax(220px, 1.5fr) 140px 130px 90px minmax(260px, 2fr) 110px 140px minmax(150px, 1fr) minmax(130px, 1fr)";
+
+const HEADER_CELL: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "4px",
+  padding: "8px 12px",
+  fontSize: "12px",
+  fontWeight: 500,
+  color: "rgba(252,252,252,0.45)",
+  background: "transparent",
+  border: "none",
+  textAlign: "left",
+  whiteSpace: "nowrap",
+  cursor: "pointer",
+  transition: "color 0.15s",
+  fontFamily: "inherit",
+};
+
+const CELL: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  padding: "7px 12px",
+  fontSize: "13px",
+  color: "rgba(252,252,252,0.5)",
+  minWidth: 0,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+};
 
 export default function CrmTable({ rows }: { rows: CrmRow[] }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir }>({
@@ -39,7 +77,7 @@ export default function CrmTable({ rows }: { rows: CrmRow[] }) {
     setSort((prev) =>
       prev.key === key
         ? { key, dir: prev.dir === "asc" ? "desc" : "asc" }
-        : { key, dir: key === "activity" ? "asc" : "asc" }
+        : { key, dir: "asc" }
     );
   }
 
@@ -52,159 +90,296 @@ export default function CrmTable({ rows }: { rows: CrmRow[] }) {
     return sort.dir === "asc" ? cmp : -cmp;
   });
 
-  function SortIcon({ col }: { col: SortKey }) {
+  function SortArrow({ col }: { col: SortKey }) {
     if (sort.key !== col) return null;
-    return sort.dir === "asc" ? (
-      <ArrowDown size={12} className="inline ml-1" />
-    ) : (
-      <ArrowUp size={12} className="inline ml-1" />
+    return (
+      <span
+        className="material-symbols-outlined"
+        style={{ fontSize: "13px", color: "#fcfcfc" }}
+      >
+        {sort.dir === "asc" ? "arrow_upward" : "arrow_downward"}
+      </span>
     );
   }
 
-  const headerCls =
-    "px-3 py-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-[rgba(252,252,252,0.4)] select-none cursor-pointer hover:text-[rgba(252,252,252,0.7)] transition-colors whitespace-nowrap";
-  const headerNoCursor =
-    "px-3 py-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-[rgba(252,252,252,0.4)] whitespace-nowrap";
-
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse min-w-[900px]">
-        <thead>
-          <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-            <th className={headerCls} onClick={() => toggleSort("name")}>
-              Contact <SortIcon col="name" />
-            </th>
-            <th className={headerNoCursor}>Type</th>
-            <th className={headerCls} onClick={() => toggleSort("stage")}>
-              Stage <SortIcon col="stage" />
-            </th>
-            <th className={headerCls} onClick={() => toggleSort("activity")}>
-              Activity <SortIcon col="activity" />
-            </th>
-            <th className={headerNoCursor}>Last message</th>
-            <th className={headerNoCursor}>Follow-up</th>
-            <th className={headerNoCursor}>Region</th>
-            <th className={headerNoCursor}>Email</th>
-            <th className={headerNoCursor}>Tags</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div style={{ overflowX: "auto", flex: 1, minHeight: 0 }}>
+      <div
+        role="table"
+        style={{ minWidth: "1180px", width: "100%" }}
+        aria-label="CRM"
+      >
+        {/* Header */}
+        <div
+          role="row"
+          style={{
+            display: "grid",
+            gridTemplateColumns: GRID_TEMPLATE,
+            position: "sticky",
+            top: 0,
+            zIndex: 2,
+            background: "#1a1a1a",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
+          {/* Contact */}
+          <button
+            role="columnheader"
+            style={{ ...HEADER_CELL, paddingLeft: "16px" }}
+            onClick={() => toggleSort("name")}
+          >
+            Contact <SortArrow col="name" />
+          </button>
+          {/* Type */}
+          <div role="columnheader" style={{ ...HEADER_CELL, cursor: "default" }}>
+            Type
+          </div>
+          {/* Stage */}
+          <button
+            role="columnheader"
+            style={HEADER_CELL}
+            onClick={() => toggleSort("stage")}
+          >
+            Stage <SortArrow col="stage" />
+          </button>
+          {/* Activity */}
+          <button
+            role="columnheader"
+            style={{
+              ...HEADER_CELL,
+              color: sort.key === "activity" ? "#fcfcfc" : "rgba(252,252,252,0.45)",
+            }}
+            onClick={() => toggleSort("activity")}
+          >
+            Activity <SortArrow col="activity" />
+          </button>
+          {/* Last message */}
+          <div role="columnheader" style={{ ...HEADER_CELL, cursor: "default" }}>
+            Last message
+          </div>
+          {/* Follow-up */}
+          <div role="columnheader" style={{ ...HEADER_CELL, cursor: "default" }}>
+            Follow-up
+          </div>
+          {/* Region */}
+          <div role="columnheader" style={{ ...HEADER_CELL, cursor: "default" }}>
+            Region
+          </div>
+          {/* Email */}
+          <div role="columnheader" style={{ ...HEADER_CELL, cursor: "default" }}>
+            Email
+          </div>
+          {/* Tags */}
+          <div role="columnheader" style={{ ...HEADER_CELL, cursor: "default" }}>
+            Tags
+          </div>
+        </div>
+
+        {/* Body */}
+        <div role="rowgroup">
           {sorted.map((row) => {
             const selected = row.id === selectedId;
+            const rgb = avatarColor(row.name);
             return (
-              <tr
+              <div
                 key={row.id}
+                role="row"
                 onClick={() => setSelectedId(selected ? null : row.id)}
-                className="cursor-pointer transition-colors"
                 style={{
-                  background: selected
-                    ? "rgba(88,184,54,0.07)"
-                    : "transparent",
-                  borderLeft: selected
-                    ? "2px solid #58b836"
-                    : "2px solid transparent",
-                  borderBottom: "1px solid rgba(255,255,255,0.04)",
+                  display: "grid",
+                  gridTemplateColumns: GRID_TEMPLATE,
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  cursor: "pointer",
+                  background: selected ? "rgba(160,255,121,0.08)" : "transparent",
+                  transition: "background 0.15s",
                 }}
                 onMouseEnter={(e) => {
                   if (!selected)
-                    (e.currentTarget as HTMLTableRowElement).style.background =
-                      "#2f3336";
+                    (e.currentTarget as HTMLDivElement).style.background = "#252525";
                 }}
                 onMouseLeave={(e) => {
                   if (!selected)
-                    (e.currentTarget as HTMLTableRowElement).style.background =
-                      "transparent";
+                    (e.currentTarget as HTMLDivElement).style.background = "transparent";
                 }}
               >
                 {/* Contact */}
-                <td className="px-3 py-2.5">
-                  <div className="flex items-center gap-2.5">
-                    <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 text-white"
-                      style={{ background: avatarColor(row.name) }}
-                    >
-                      {initials(row.name)}
-                    </div>
-                    <span className="text-sm text-[#fcfcfc] font-medium truncate max-w-[160px]">
-                      {row.name}
-                    </span>
+                <div role="cell" style={{ ...CELL, paddingLeft: "16px", gap: "10px" }}>
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      background: `rgba(${rgb}, 0.25)`,
+                      border: `1px solid rgba(${rgb}, 0.4)`,
+                      color: `rgb(${rgb})`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {initials(row.name)}
                   </div>
-                </td>
-                {/* Type */}
-                <td className="px-3 py-2.5">
-                  <RelPill value={row.relationship} />
-                </td>
-                {/* Stage */}
-                <td className="px-3 py-2.5">
-                  <StagePill value={row.stage} />
-                </td>
-                {/* Activity */}
-                <td className="px-3 py-2.5">
-                  <span className="text-sm text-[rgba(252,252,252,0.6)] tabular-nums">
-                    {row.activity}
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 400,
+                      color: "#fcfcfc",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {row.name}
                   </span>
-                </td>
+                </div>
+
+                {/* Type */}
+                <div role="cell" style={CELL}>
+                  <RelPill value={row.relationship} />
+                </div>
+
+                {/* Stage */}
+                <div role="cell" style={CELL}>
+                  <StagePill value={row.stage} />
+                </div>
+
+                {/* Activity */}
+                <div
+                  role="cell"
+                  style={{
+                    ...CELL,
+                    fontVariantNumeric: "tabular-nums",
+                    gap: "6px",
+                  }}
+                >
+                  <span>{row.activity}</span>
+                  {row.direction === "in" && (
+                    <span
+                      style={{
+                        width: "7px",
+                        height: "7px",
+                        borderRadius: "50%",
+                        background: "#a0ff79",
+                        flexShrink: 0,
+                      }}
+                    />
+                  )}
+                </div>
+
                 {/* Last message */}
-                <td className="px-3 py-2.5 max-w-[260px]">
-                  <div className="flex items-center gap-1.5">
-                    {row.direction === "out" ? (
-                      <MoveUpRight
-                        size={11}
-                        className="shrink-0 text-[rgba(252,252,252,0.35)]"
-                      />
-                    ) : (
-                      <MoveDownLeft
-                        size={11}
-                        className="shrink-0 text-[rgba(252,252,252,0.35)]"
-                      />
-                    )}
-                    <span className="text-sm text-[rgba(252,252,252,0.55)] truncate">
-                      {row.lastMessage}
-                    </span>
-                  </div>
-                </td>
+                <div role="cell" style={{ ...CELL, gap: "6px" }}>
+                  <span
+                    className="material-symbols-outlined"
+                    style={{
+                      fontSize: "13px",
+                      flexShrink: 0,
+                      color:
+                        row.direction === "in"
+                          ? "rgb(59,130,246)"
+                          : "rgba(252,252,252,0.35)",
+                    }}
+                  >
+                    {row.direction === "in" ? "call_received" : "call_made"}
+                  </span>
+                  <span
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {row.lastMessage}
+                  </span>
+                </div>
+
                 {/* Follow-up */}
-                <td className="px-3 py-2.5">
+                <div role="cell" style={{ ...CELL, gap: "4px" }}>
                   {row.followUp && (
-                    <span className="text-xs text-[#f59e0b]">{row.followUp}</span>
+                    <>
+                      <span
+                        className="material-symbols-outlined"
+                        style={{
+                          fontSize: "13px",
+                          color: "rgba(252,252,252,0.35)",
+                        }}
+                      >
+                        calendar_month
+                      </span>
+                      <span style={{ fontSize: "12px", color: "rgba(252,252,252,0.6)" }}>
+                        {row.followUp}
+                      </span>
+                    </>
                   )}
-                </td>
+                </div>
+
                 {/* Region */}
-                <td className="px-3 py-2.5">
+                <div role="cell" style={{ ...CELL, gap: "6px" }}>
                   {row.region && (
-                    <span className="text-sm text-[rgba(252,252,252,0.6)] whitespace-nowrap">
-                      {row.regionFlag} {row.region}
-                    </span>
+                    <>
+                      <span style={{ fontSize: "14px" }}>{row.regionFlag}</span>
+                      <span>{row.region}</span>
+                    </>
                   )}
-                </td>
+                </div>
+
                 {/* Email */}
-                <td className="px-3 py-2.5">
+                <div role="cell" style={CELL}>
                   {row.email && (
-                    <span className="text-xs text-[rgba(252,252,252,0.5)] truncate max-w-[160px]">
+                    <span
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        fontSize: "12px",
+                      }}
+                    >
                       {row.email}
                     </span>
                   )}
-                </td>
+                </div>
+
                 {/* Tags */}
-                <td className="px-3 py-2.5">
+                <div role="cell" style={{ ...CELL, gap: "4px", flexWrap: "wrap" }}>
                   {row.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] px-1.5 py-0.5 rounded"
                       style={{
-                        background: "rgba(102,186,255,0.15)",
-                        color: "#66baff",
+                        fontSize: "11px",
+                        padding: "2px 7px",
+                        borderRadius: "9999px",
+                        background: "rgba(252,252,252,0.08)",
+                        color: "rgba(252,252,252,0.6)",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {tag}
                     </span>
                   ))}
-                </td>
-              </tr>
+                </div>
+              </div>
             );
           })}
-        </tbody>
-      </table>
+        </div>
+
+        {!sorted.length && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "8px",
+              padding: "32px",
+              color: "rgba(252,252,252,0.4)",
+              fontSize: "14px",
+            }}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: "32px", opacity: 0.6 }}>
+              filter_list_off
+            </span>
+            <span>No hay resultados</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

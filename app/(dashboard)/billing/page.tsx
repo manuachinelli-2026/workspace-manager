@@ -1,12 +1,10 @@
 "use client";
 
-import { CheckCircle2, MinusCircle, Download } from "lucide-react";
-
 const LICENSE_ROWS = [
   {
     name: "Manuel Achinelli",
     initials: "MA",
-    color: "#58b836",
+    avatarRgb: "88, 184, 54",
     license: "active" as const,
     voltCloud: true,
     hubspot: true,
@@ -15,7 +13,7 @@ const LICENSE_ROWS = [
   {
     name: "Santiago Rodríguez",
     initials: "SR",
-    color: "#66baff",
+    avatarRgb: "71, 105, 134",
     license: "active" as const,
     voltCloud: true,
     hubspot: true,
@@ -24,7 +22,7 @@ const LICENSE_ROWS = [
   {
     name: "Valentina López",
     initials: "VL",
-    color: "#a855f7",
+    avatarRgb: "139, 92, 246",
     license: "active" as const,
     voltCloud: true,
     hubspot: false,
@@ -33,7 +31,7 @@ const LICENSE_ROWS = [
   {
     name: "Nicolás Bravo",
     initials: "NB",
-    color: "#f59e0b",
+    avatarRgb: "217, 119, 6",
     license: "active" as const,
     voltCloud: false,
     hubspot: false,
@@ -42,7 +40,7 @@ const LICENSE_ROWS = [
   {
     name: "Camila Torres",
     initials: "CT",
-    color: "#ec4899",
+    avatarRgb: "219, 39, 119",
     license: "pending" as const,
     voltCloud: false,
     hubspot: false,
@@ -51,7 +49,7 @@ const LICENSE_ROWS = [
   {
     name: "Martín Pérez",
     initials: "MP",
-    color: "#14b8a6",
+    avatarRgb: "13, 148, 136",
     license: "pending" as const,
     voltCloud: false,
     hubspot: false,
@@ -67,51 +65,153 @@ const PAYMENT_HISTORY = [
 
 function CheckOrDash({ value }: { value: boolean }) {
   if (value)
-    return <CheckCircle2 size={15} className="text-[#58b836]" />;
-  return <MinusCircle size={15} className="text-[rgba(252,252,252,0.2)]" />;
+    return (
+      <span
+        className="material-symbols-outlined"
+        style={{
+          fontSize: "15px",
+          color: "#a0ff79",
+          fontVariationSettings: '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24',
+        }}
+      >
+        check_circle
+      </span>
+    );
+  return (
+    <span
+      className="material-symbols-outlined"
+      style={{ fontSize: "15px", color: "rgba(252,252,252,0.2)" }}
+    >
+      remove
+    </span>
+  );
 }
+
+const HEADER_CELL: React.CSSProperties = {
+  padding: "8px 16px",
+  textAlign: "left",
+  fontSize: "12px",
+  fontWeight: 500,
+  color: "rgba(252,252,252,0.45)",
+  whiteSpace: "nowrap",
+  borderBottom: "1px solid rgba(255,255,255,0.06)",
+};
 
 export default function BillingPage() {
   const activeLicenses = LICENSE_ROWS.filter((r) => r.license === "active").length;
   const totalLicenses = LICENSE_ROWS.length;
   const usagePct = (activeLicenses / totalLicenses) * 100;
 
-  const headerCls =
-    "px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-[rgba(252,252,252,0.4)] whitespace-nowrap";
-
   return (
-    <div className="px-6 py-6 max-w-4xl">
-      <h1 className="text-lg font-semibold text-[#fcfcfc] mb-6">Facturación</h1>
+    <div
+      style={{
+        padding: "16px 16px",
+        maxWidth: "900px",
+        overflowY: "auto",
+        height: "100%",
+      }}
+    >
+      <h1
+        style={{
+          fontSize: "22px",
+          fontWeight: 400,
+          color: "#fcfcfc",
+          marginBottom: "16px",
+        }}
+      >
+        Facturación
+      </h1>
 
       {/* Plan card */}
       <div
-        className="rounded-xl p-6 mb-6"
         style={{
-          background: "#282b2e",
+          borderRadius: "10px",
+          padding: "20px",
+          marginBottom: "16px",
+          background: "#1f1f1f",
           border: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div className="flex items-start justify-between mb-4">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            marginBottom: "16px",
+          }}
+        >
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "6px",
+              }}
+            >
               <span
-                className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                style={{ background: "rgba(88,184,54,0.2)", color: "#58b836" }}
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  padding: "3px 10px",
+                  borderRadius: "9999px",
+                  background: "rgba(88,184,54,0.13)",
+                  color: "rgb(88,184,54)",
+                }}
               >
                 Business
               </span>
-              <span className="text-[rgba(252,252,252,0.4)] text-xs">Plan activo</span>
+              <span
+                style={{ fontSize: "12px", color: "rgba(252,252,252,0.4)" }}
+              >
+                Plan activo
+              </span>
             </div>
-            <p className="text-2xl font-bold text-[#fcfcfc]">
+            <p
+              style={{
+                fontSize: "26px",
+                fontWeight: 600,
+                color: "#fcfcfc",
+                lineHeight: 1,
+              }}
+            >
               $299
-              <span className="text-sm font-normal text-[rgba(252,252,252,0.5)]">/mes</span>
+              <span
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 400,
+                  color: "rgba(252,252,252,0.5)",
+                  marginLeft: "4px",
+                }}
+              >
+                /mes
+              </span>
             </p>
           </div>
           <button
-            className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             style={{
+              padding: "7px 14px",
+              borderRadius: "8px",
+              fontSize: "13px",
+              fontWeight: 500,
               border: "1px solid rgba(255,255,255,0.1)",
-              color: "rgba(252,252,252,0.7)",
+              color: "rgba(252,252,252,0.6)",
+              background: "transparent",
+              cursor: "pointer",
+              transition: "border-color 0.15s, color 0.15s",
+              fontFamily: "inherit",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.borderColor =
+                "rgba(255,255,255,0.2)";
+              (e.currentTarget as HTMLButtonElement).style.color =
+                "rgba(252,252,252,0.85)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.borderColor =
+                "rgba(255,255,255,0.1)";
+              (e.currentTarget as HTMLButtonElement).style.color =
+                "rgba(252,252,252,0.6)";
             }}
           >
             Cambiar plan
@@ -120,19 +220,48 @@ export default function BillingPage() {
 
         {/* Usage bar */}
         <div>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-[rgba(252,252,252,0.6)]">Licencias</span>
-            <span className="text-sm font-semibold text-[#fcfcfc]">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "8px",
+            }}
+          >
+            <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.6)" }}>
+              Licencias
+            </span>
+            <span
+              style={{ fontSize: "13px", fontWeight: 600, color: "#fcfcfc" }}
+            >
               {activeLicenses} / {totalLicenses} activas
             </span>
           </div>
-          <div className="h-2 rounded-full bg-[rgba(255,255,255,0.08)] overflow-hidden">
+          <div
+            style={{
+              height: "6px",
+              borderRadius: "9999px",
+              background: "rgba(255,255,255,0.08)",
+              overflow: "hidden",
+            }}
+          >
             <div
-              className="h-full rounded-full transition-all"
-              style={{ width: `${usagePct}%`, background: "#58b836" }}
+              style={{
+                height: "100%",
+                borderRadius: "9999px",
+                width: `${usagePct}%`,
+                background: "#a0ff79",
+                transition: "width 0.3s",
+              }}
             />
           </div>
-          <p className="text-xs text-[rgba(252,252,252,0.4)] mt-1.5">
+          <p
+            style={{
+              fontSize: "11px",
+              color: "rgba(252,252,252,0.4)",
+              marginTop: "6px",
+            }}
+          >
             {totalLicenses - activeLicenses} licencias pendientes de activación
           </p>
         </div>
@@ -140,23 +269,38 @@ export default function BillingPage() {
 
       {/* Licenses table */}
       <div
-        className="rounded-xl overflow-hidden mb-6"
         style={{
-          background: "#282b2e",
+          borderRadius: "10px",
+          overflow: "hidden",
+          marginBottom: "16px",
+          background: "#1f1f1f",
           border: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div className="px-5 py-3.5 border-b border-[rgba(255,255,255,0.06)]">
-          <h2 className="text-sm font-semibold text-[#fcfcfc]">Detalle de licencias</h2>
+        <div
+          style={{
+            padding: "12px 16px",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "#fcfcfc",
+            }}
+          >
+            Detalle de licencias
+          </h2>
         </div>
-        <table className="w-full border-collapse">
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
-            <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <th className={headerCls}>Asesor</th>
-              <th className={headerCls}>Licencia</th>
-              <th className={headerCls}>Volt Cloud</th>
-              <th className={headerCls}>HubSpot</th>
-              <th className={headerCls}>Renovación</th>
+            <tr>
+              <th style={HEADER_CELL}>Asesor</th>
+              <th style={HEADER_CELL}>Licencia</th>
+              <th style={HEADER_CELL}>Volt Cloud</th>
+              <th style={HEADER_CELL}>HubSpot</th>
+              <th style={HEADER_CELL}>Renovación</th>
             </tr>
           </thead>
           <tbody>
@@ -166,49 +310,115 @@ export default function BillingPage() {
                 style={{
                   borderBottom:
                     i < LICENSE_ROWS.length - 1
-                      ? "1px solid rgba(255,255,255,0.04)"
+                      ? "1px solid rgba(255,255,255,0.06)"
                       : "none",
                 }}
               >
-                <td className="px-4 py-3.5">
-                  <div className="flex items-center gap-3">
+                <td style={{ padding: "11px 16px" }}>
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                  >
                     <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
-                      style={{ background: row.color }}
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        borderRadius: "50%",
+                        background: `rgba(${row.avatarRgb}, 0.2)`,
+                        border: `1px solid rgba(${row.avatarRgb}, 0.4)`,
+                        color: `rgb(${row.avatarRgb})`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        flexShrink: 0,
+                      }}
                     >
                       {row.initials}
                     </div>
-                    <span className="text-sm text-[#fcfcfc]">{row.name}</span>
+                    <span
+                      style={{ fontSize: "13px", color: "#fcfcfc" }}
+                    >
+                      {row.name}
+                    </span>
                   </div>
                 </td>
-                <td className="px-4 py-3.5">
+                <td style={{ padding: "11px 16px" }}>
                   {row.license === "active" ? (
                     <span
-                      className="text-xs px-2 py-0.5 rounded-full font-medium"
-                      style={{ background: "rgba(88,184,54,0.15)", color: "#58b836" }}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        fontSize: "12px",
+                        padding: "3px 10px",
+                        borderRadius: "9999px",
+                        fontWeight: 500,
+                        background: "rgba(88,184,54,0.13)",
+                        color: "rgb(88,184,54)",
+                      }}
                     >
-                      ✅ Activa
+                      <span
+                        className="material-symbols-outlined"
+                        style={{
+                          fontSize: "12px",
+                          fontVariationSettings:
+                            '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24',
+                        }}
+                      >
+                        check_circle
+                      </span>
+                      Activa
                     </span>
                   ) : (
                     <span
-                      className="text-xs px-2 py-0.5 rounded-full font-medium"
-                      style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        fontSize: "12px",
+                        padding: "3px 10px",
+                        borderRadius: "9999px",
+                        fontWeight: 500,
+                        background: "rgba(217,119,6,0.13)",
+                        color: "rgb(217,119,6)",
+                      }}
                     >
-                      ⏳ Pendiente
+                      <span
+                        className="material-symbols-outlined"
+                        style={{ fontSize: "12px" }}
+                      >
+                        pending
+                      </span>
+                      Pendiente
                     </span>
                   )}
                 </td>
-                <td className="px-4 py-3.5">
+                <td style={{ padding: "11px 16px" }}>
                   <CheckOrDash value={row.voltCloud} />
                 </td>
-                <td className="px-4 py-3.5">
+                <td style={{ padding: "11px 16px" }}>
                   <CheckOrDash value={row.hubspot} />
                 </td>
-                <td className="px-4 py-3.5">
+                <td style={{ padding: "11px 16px" }}>
                   {row.renewal ? (
-                    <span className="text-sm text-[rgba(252,252,252,0.6)]">{row.renewal}</span>
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: "rgba(252,252,252,0.6)",
+                      }}
+                    >
+                      {row.renewal}
+                    </span>
                   ) : (
-                    <span className="text-[rgba(252,252,252,0.2)] text-sm">—</span>
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: "rgba(252,252,252,0.2)",
+                      }}
+                    >
+                      —
+                    </span>
                   )}
                 </td>
               </tr>
@@ -219,30 +429,105 @@ export default function BillingPage() {
 
       {/* Payment history */}
       <div
-        className="rounded-xl overflow-hidden"
         style={{
-          background: "#282b2e",
+          borderRadius: "10px",
+          overflow: "hidden",
+          background: "#1f1f1f",
           border: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div className="px-5 py-3.5 border-b border-[rgba(255,255,255,0.06)]">
-          <h2 className="text-sm font-semibold text-[#fcfcfc]">Historial de pagos</h2>
+        <div
+          style={{
+            padding: "12px 16px",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "#fcfcfc",
+            }}
+          >
+            Historial de pagos
+          </h2>
         </div>
-        <div className="divide-y divide-[rgba(255,255,255,0.04)]">
-          {PAYMENT_HISTORY.map((payment) => (
-            <div key={payment.invoice} className="px-5 py-3.5 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-[rgba(252,252,252,0.6)]">{payment.date}</span>
-                <span className="text-sm font-semibold text-[#fcfcfc]">{payment.amount}</span>
+        <div>
+          {PAYMENT_HISTORY.map((payment, i) => (
+            <div
+              key={payment.invoice}
+              style={{
+                padding: "12px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderBottom:
+                  i < PAYMENT_HISTORY.length - 1
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "none",
+              }}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "16px" }}
+              >
                 <span
-                  className="text-[11px] px-2 py-0.5 rounded-full font-medium"
-                  style={{ background: "rgba(88,184,54,0.15)", color: "#58b836" }}
+                  style={{
+                    fontSize: "13px",
+                    color: "rgba(252,252,252,0.6)",
+                  }}
+                >
+                  {payment.date}
+                </span>
+                <span
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#fcfcfc",
+                  }}
+                >
+                  {payment.amount}
+                </span>
+                <span
+                  style={{
+                    fontSize: "11px",
+                    padding: "3px 10px",
+                    borderRadius: "9999px",
+                    fontWeight: 500,
+                    background: "rgba(88,184,54,0.13)",
+                    color: "rgb(88,184,54)",
+                  }}
                 >
                   Pagado
                 </span>
               </div>
-              <button className="flex items-center gap-1.5 text-xs text-[rgba(252,252,252,0.4)] hover:text-[rgba(252,252,252,0.7)] transition-colors">
-                <Download size={12} />
+              <button
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  fontSize: "12px",
+                  color: "rgba(252,252,252,0.4)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "color 0.15s",
+                  fontFamily: "inherit",
+                }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLButtonElement).style.color =
+                    "rgba(252,252,252,0.7)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLButtonElement).style.color =
+                    "rgba(252,252,252,0.4)")
+                }
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontSize: "14px" }}
+                >
+                  download
+                </span>
                 {payment.invoice}
               </button>
             </div>

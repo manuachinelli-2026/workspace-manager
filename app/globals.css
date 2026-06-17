@@ -1,32 +1,101 @@
 @import "tailwindcss";
 
 @theme {
-  --color-volt-green: #58b836;
-  --color-volt-green-neon: #a0ff79;
-  --color-volt-blue: #66baff;
+  --font-sans: var(--font-sans, "Funnel Sans", system-ui, sans-serif);
+  --color-volt-green: #a0ff79;
+  --color-volt-green-solid: #58b836;
+  --color-volt-green-dark: #324730;
   --color-volt-charcoal: #1a1a1a;
   --color-volt-nightsky: #282b2e;
-  --color-volt-elevated: #2f3336;
+  --color-volt-surface: #252525;
+  --color-volt-elevated: #1f1f1f;
   --color-volt-offwhite: #fcfcfc;
-  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #1a1a1a;
+  background: #1a1a1a;
   color: #fcfcfc;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-sans, "Funnel Sans", system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
+/* Volt font scale */
+:root {
+  --volt-font-3xs: 9px;
+  --volt-font-2xs: 10px;
+  --volt-font-xs: 11px;
+  --volt-font-sm: 12px;
+  --volt-font-md: 13px;
+  --volt-font-base: 14px;
+  --volt-font-lg: 15px;
+  --volt-font-xl: 17px;
+  --volt-font-2xl: 19px;
+  --volt-font-3xl: 22px;
+  --volt-font-4xl: 26px;
+  --volt-font-5xl: 48px;
+
+  --volt-space-2: 8px;
+  --volt-space-3: 12px;
+  --volt-space-4: 16px;
+  --volt-space-5: 20px;
+  --volt-space-8: 32px;
+
+  --volt-radius-sm: 8px;
+  --volt-radius-md: 10px;
+  --volt-radius-pill: 9999px;
+
+  --volt-transition-fast: 0.15s;
+  --volt-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --volt-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Volt brand */
+  --volt-electric-green: #a0ff79;
+  --volt-electric-green-RGB: 160, 255, 121;
+  --volt-electric-green-solid: #58b836;
+  --volt-electric-green-solid-RGB: 88, 184, 54;
+  --volt-charcoal: #1a1a1a;
+  --volt-charcoal-RGB: 26, 26, 26;
+  --volt-nightsky: #282b2e;
+  --volt-nightsky-RGB: 40, 43, 46;
+  --volt-surface: #252525;
+  --volt-elevated: #1f1f1f;
+  --volt-off-white: #fcfcfc;
+  --volt-off-white-RGB: 252, 252, 252;
+
+  /* CRM pill RGBs — exact values from crm.scss */
+  --volt-crm-lead-RGB: 59, 130, 246;
+  --volt-crm-closing-RGB: 217, 119, 6;
+  --volt-crm-won-RGB: 88, 184, 54;
+  --volt-crm-lost-RGB: 239, 68, 68;
+  --volt-crm-customer-RGB: 13, 148, 136;
+  --volt-crm-partner-RGB: 139, 92, 246;
+  --volt-crm-vendor-RGB: 234, 88, 12;
+  --volt-crm-team-RGB: 71, 105, 134;
+  --volt-crm-personal-RGB: 219, 39, 119;
+  --volt-crm-automated-RGB: 120, 124, 130;
+
+  /* CRM hairlines */
+  --volt-crm-hairline: rgba(255, 255, 255, 0.06);
+  --volt-divider: rgba(255, 255, 255, 0.08);
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -35,9 +104,42 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Material Symbols base */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  line-height: 1;
+  vertical-align: middle;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Input autofill dark override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fcfcfc;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.04) inset;
+  transition: background-color 9999s ease-out;
+  caret-color: #a0ff79;
+}
+
+input {
+  caret-color: #a0ff79;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

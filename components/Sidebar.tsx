@@ -2,21 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  BarChart2,
-  Users,
-  PlugZap,
-  CreditCard,
-  LogOut,
-  Zap,
-} from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "CRM View", href: "/crm", icon: BarChart2 },
-  { label: "Equipo", href: "/team", icon: Users },
-  { label: "App Store", href: "/apps", icon: PlugZap },
-  { label: "Facturación", href: "/billing", icon: CreditCard },
-];
+  { label: "CRM View",      href: "/crm",     icon: "table_chart" },
+  { label: "Equipo",        href: "/team",    icon: "group" },
+  { label: "App Store",     href: "/apps",    icon: "extension" },
+  { label: "Facturación",   href: "/billing", icon: "credit_card" },
+] as const;
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -29,40 +21,100 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="flex flex-col h-full w-[220px] shrink-0"
       style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: "220px",
+        flexShrink: 0,
         background: "#1a1a1a",
         borderRight: "1px solid rgba(255,255,255,0.08)",
       }}
     >
       {/* Logo */}
-      <div className="px-5 py-5 border-b border-[rgba(255,255,255,0.08)]">
-        <div className="flex items-center gap-2">
-          <Zap size={18} className="text-[#58b836]" fill="#58b836" />
-          <span className="text-sm font-semibold tracking-tight">
-            <span className="text-[#fcfcfc]">Workspace </span>
-            <span className="text-[#58b836]">Manager</span>
-          </span>
-        </div>
+      <div
+        style={{
+          padding: "14px 12px 14px 14px",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "18px",
+            color: "#a0ff79",
+            lineHeight: 1,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          ⚡
+        </span>
+        <span style={{ fontSize: "14px", fontWeight: 600, lineHeight: 1 }}>
+          <span style={{ color: "#fcfcfc" }}>Workspace</span>{" "}
+          <span style={{ color: "#a0ff79" }}>Manager</span>
+        </span>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 flex flex-col gap-0.5">
-        {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
+      <nav
+        style={{
+          flex: 1,
+          padding: "8px 6px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "2px",
+          overflowY: "auto",
+        }}
+      >
+        {NAV_ITEMS.map(({ label, href, icon }) => {
           const active = pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors relative"
               style={{
-                background: active ? "rgba(88,184,54,0.12)" : "transparent",
-                color: active ? "#58b836" : "rgba(252,252,252,0.65)",
-                borderLeft: active ? "2px solid #58b836" : "2px solid transparent",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "0 10px",
+                height: "34px",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: 500,
+                textDecoration: "none",
+                transition: `background ${0.15}s, color ${0.15}s`,
+                background: active ? "rgba(255,255,255,0.08)" : "transparent",
+                color: active ? "#fcfcfc" : "rgba(252,252,252,0.55)",
+              }}
+              onMouseEnter={(e) => {
+                if (!active) {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.06)";
+                  (e.currentTarget as HTMLAnchorElement).style.color = "rgba(252,252,252,0.8)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!active) {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                  (e.currentTarget as HTMLAnchorElement).style.color = "rgba(252,252,252,0.55)";
+                }
               }}
             >
-              <Icon size={16} />
-              <span className="font-medium">{label}</span>
+              <span
+                className="material-symbols-outlined"
+                style={{
+                  fontSize: "18px",
+                  color: active ? "#a0ff79" : "inherit",
+                  fontVariationSettings: active
+                    ? '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24'
+                    : '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24',
+                }}
+              >
+                {icon}
+              </span>
+              <span>{label}</span>
             </Link>
           );
         })}
@@ -70,29 +122,83 @@ export default function Sidebar() {
 
       {/* User */}
       <div
-        className="px-4 py-4 border-t border-[rgba(255,255,255,0.08)] flex items-center gap-3"
+        style={{
+          padding: "12px 12px",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+        }}
       >
         <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-          style={{ background: "#58b836", color: "#fff" }}
+          style={{
+            width: "28px",
+            height: "28px",
+            borderRadius: "50%",
+            background: "#a0ff79",
+            color: "#1a1a1a",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "10px",
+            fontWeight: 700,
+            flexShrink: 0,
+          }}
         >
           MA
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-[#fcfcfc] truncate">Manuel Achinelli</p>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p
+            style={{
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "#fcfcfc",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              lineHeight: 1.3,
+            }}
+          >
+            Manuel Achinelli
+          </p>
           <span
-            className="text-[10px] font-medium px-1.5 py-0.5 rounded"
-            style={{ background: "rgba(88,184,54,0.2)", color: "#58b836" }}
+            style={{
+              fontSize: "10px",
+              fontWeight: 500,
+              padding: "1px 6px",
+              borderRadius: "9999px",
+              background: "rgba(160,255,121,0.12)",
+              color: "#a0ff79",
+              lineHeight: 1.6,
+              display: "inline-block",
+            }}
           >
             Admin
           </span>
         </div>
         <button
           onClick={handleLogout}
-          className="text-[rgba(252,252,252,0.3)] hover:text-[rgba(252,252,252,0.7)] transition-colors"
           title="Cerrar sesión"
+          style={{
+            background: "none",
+            border: "none",
+            padding: "4px",
+            borderRadius: "6px",
+            color: "rgba(252,252,252,0.3)",
+            display: "flex",
+            alignItems: "center",
+            transition: "color 0.15s",
+          }}
+          onMouseEnter={(e) =>
+            ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.7)")
+          }
+          onMouseLeave={(e) =>
+            ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.3)")
+          }
         >
-          <LogOut size={14} />
+          <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>
+            logout
+          </span>
         </button>
       </div>
     </aside>

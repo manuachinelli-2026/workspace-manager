@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Clock, Users, CreditCard, CheckCircle2, XCircle, MinusCircle, X } from "lucide-react";
 
 interface Member {
   name: string;
   initials: string;
-  avatarColor: string;
+  avatarRgb: string;
   status: "active" | "invited";
   voltCloud: "connected" | "disconnected" | null;
   hubspot: "linked" | "pending" | null;
@@ -19,7 +18,7 @@ const MEMBERS: Member[] = [
   {
     name: "Manuel Achinelli",
     initials: "MA",
-    avatarColor: "#58b836",
+    avatarRgb: "88, 184, 54",
     status: "active",
     voltCloud: "connected",
     hubspot: "linked",
@@ -30,7 +29,7 @@ const MEMBERS: Member[] = [
   {
     name: "Santiago Rodríguez",
     initials: "SR",
-    avatarColor: "#66baff",
+    avatarRgb: "71, 105, 134",
     status: "active",
     voltCloud: "connected",
     hubspot: "linked",
@@ -41,7 +40,7 @@ const MEMBERS: Member[] = [
   {
     name: "Valentina López",
     initials: "VL",
-    avatarColor: "#a855f7",
+    avatarRgb: "139, 92, 246",
     status: "active",
     voltCloud: "connected",
     hubspot: "pending",
@@ -52,7 +51,7 @@ const MEMBERS: Member[] = [
   {
     name: "Nicolás Bravo",
     initials: "NB",
-    avatarColor: "#f59e0b",
+    avatarRgb: "217, 119, 6",
     status: "active",
     voltCloud: "disconnected",
     hubspot: "pending",
@@ -63,7 +62,7 @@ const MEMBERS: Member[] = [
   {
     name: "Camila Torres",
     initials: "CT",
-    avatarColor: "#ec4899",
+    avatarRgb: "219, 39, 119",
     status: "invited",
     voltCloud: null,
     hubspot: null,
@@ -74,7 +73,7 @@ const MEMBERS: Member[] = [
   {
     name: "Martín Pérez",
     initials: "MP",
-    avatarColor: "#14b8a6",
+    avatarRgb: "13, 148, 136",
     status: "invited",
     voltCloud: null,
     hubspot: null,
@@ -84,120 +83,279 @@ const MEMBERS: Member[] = [
   },
 ];
 
-function StatusBadge({ status }: { status: Member["status"] }) {
+function Pill({
+  rgb,
+  label,
+  icon,
+}: {
+  rgb: string;
+  label: string;
+  icon?: string;
+}) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "5px",
+        borderRadius: "9999px",
+        padding: "3px 10px",
+        fontSize: "12px",
+        fontWeight: 500,
+        background: `rgba(${rgb}, 0.13)`,
+        color: `rgb(${rgb})`,
+        whiteSpace: "nowrap",
+      }}
+    >
+      {icon && (
+        <span
+          className="material-symbols-outlined"
+          style={{ fontSize: "12px" }}
+        >
+          {icon}
+        </span>
+      )}
+      {label}
+    </span>
+  );
+}
+
+function StatusCell({ status }: { status: Member["status"] }) {
   if (status === "active") {
     return (
-      <div className="flex items-center gap-1.5">
-        <div className="w-1.5 h-1.5 rounded-full bg-[#58b836]" />
-        <span className="text-sm text-[rgba(252,252,252,0.8)]">Activo</span>
+      <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+        <span
+          style={{
+            width: "7px",
+            height: "7px",
+            borderRadius: "50%",
+            background: "#a0ff79",
+            flexShrink: 0,
+          }}
+        />
+        <span style={{ fontSize: "13px", color: "#fcfcfc" }}>Activo</span>
       </div>
     );
   }
-  return (
-    <span
-      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
-      style={{ background: "rgba(102,186,255,0.15)", color: "#66baff" }}
-    >
-      📩 Invitado
-    </span>
-  );
+  return <Pill rgb="59, 130, 246" label="Invitado" />;
 }
 
-function VoltCloudStatus({ value }: { value: Member["voltCloud"] }) {
-  if (value === null) return <span className="text-[rgba(252,252,252,0.2)] text-sm">—</span>;
+function VoltCloudCell({ value }: { value: Member["voltCloud"] }) {
+  if (value === null)
+    return (
+      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>
+    );
   if (value === "connected")
     return (
-      <div className="flex items-center gap-1.5">
-        <CheckCircle2 size={14} className="text-[#58b836]" />
-        <span className="text-sm text-[rgba(252,252,252,0.7)]">Conectado</span>
+      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+        <span
+          className="material-symbols-outlined"
+          style={{
+            fontSize: "14px",
+            color: "#a0ff79",
+            fontVariationSettings: '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24',
+          }}
+        >
+          check_circle
+        </span>
+        <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.7)" }}>
+          Conectado
+        </span>
       </div>
     );
   return (
-    <div className="flex items-center gap-1.5">
-      <XCircle size={14} className="text-[rgba(252,252,252,0.3)]" />
-      <span className="text-sm text-[rgba(252,252,252,0.4)]">Sin conectar</span>
+    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+      <span
+        className="material-symbols-outlined"
+        style={{ fontSize: "14px", color: "rgba(252,252,252,0.25)" }}
+      >
+        radio_button_unchecked
+      </span>
+      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.4)" }}>
+        Sin conectar
+      </span>
     </div>
   );
 }
 
-function HubSpotStatus({ value }: { value: Member["hubspot"] }) {
-  if (value === null) return <span className="text-[rgba(252,252,252,0.2)] text-sm">—</span>;
+function HubSpotCell({ value }: { value: Member["hubspot"] }) {
+  if (value === null)
+    return (
+      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}>—</span>
+    );
   if (value === "linked")
     return (
-      <div className="flex items-center gap-1.5">
-        <CheckCircle2 size={14} className="text-[#58b836]" />
-        <span className="text-sm text-[rgba(252,252,252,0.7)]">Vinculado</span>
+      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+        <span
+          className="material-symbols-outlined"
+          style={{
+            fontSize: "14px",
+            color: "#a0ff79",
+            fontVariationSettings: '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24',
+          }}
+        >
+          check_circle
+        </span>
+        <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.7)" }}>
+          Vinculado
+        </span>
       </div>
     );
   return (
-    <div className="flex items-center gap-1.5">
-      <MinusCircle size={14} className="text-[#f59e0b]" />
-      <span className="text-sm text-[rgba(252,252,252,0.4)]">Pendiente</span>
+    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+      <span
+        className="material-symbols-outlined"
+        style={{ fontSize: "14px", color: "rgb(217, 119, 6)" }}
+      >
+        pending
+      </span>
+      <span style={{ fontSize: "13px", color: "rgba(252,252,252,0.4)" }}>
+        Pendiente
+      </span>
     </div>
   );
 }
 
-function LicenseStatus({ value }: { value: Member["license"] }) {
+function LicenseCell({ value }: { value: Member["license"] }) {
   if (value === "active")
-    return (
-      <span
-        className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
-        style={{ background: "rgba(88,184,54,0.15)", color: "#58b836" }}
-      >
-        ✅ Activa
-      </span>
-    );
-  return (
-    <span
-      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
-      style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}
-    >
-      ⏳ Pendiente
-    </span>
-  );
+    return <Pill rgb="88, 184, 54" label="Activa" icon="check_circle" />;
+  return <Pill rgb="217, 119, 6" label="Pendiente" icon="pending" />;
 }
 
 function InviteModal({ onClose }: { onClose: () => void }) {
   const [value, setValue] = useState("");
   const [sent, setSent] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   function handleSend() {
     if (!value.trim()) return;
     setSent(true);
-    setTimeout(onClose, 1200);
+    setTimeout(onClose, 1400);
   }
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: "rgba(0,0,0,0.6)" }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0,0,0,0.65)",
+      }}
       onClick={onClose}
     >
       <div
-        className="w-full max-w-sm rounded-2xl p-6 relative"
-        style={{ background: "#282b2e", border: "1px solid rgba(255,255,255,0.1)" }}
+        style={{
+          width: "100%",
+          maxWidth: "380px",
+          borderRadius: "16px",
+          padding: "24px",
+          position: "relative",
+          background: "#282b2e",
+          border: "1px solid rgba(255,255,255,0.1)",
+          animation: "volt-login-in 0.15s cubic-bezier(0.16,1,0.3,1)",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
+        <style>{`
+          @keyframes volt-login-in {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[rgba(252,252,252,0.4)] hover:text-[rgba(252,252,252,0.8)]"
+          style={{
+            position: "absolute",
+            top: "14px",
+            right: "14px",
+            background: "none",
+            border: "none",
+            color: "rgba(252,252,252,0.35)",
+            cursor: "pointer",
+            display: "flex",
+            padding: "4px",
+            borderRadius: "6px",
+          }}
+          onMouseEnter={(e) =>
+            ((e.currentTarget as HTMLButtonElement).style.color =
+              "rgba(252,252,252,0.7)")
+          }
+          onMouseLeave={(e) =>
+            ((e.currentTarget as HTMLButtonElement).style.color =
+              "rgba(252,252,252,0.35)")
+          }
         >
-          <X size={16} />
+          <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+            close
+          </span>
         </button>
-        <h2 className="text-base font-semibold text-[#fcfcfc] mb-1">Invitar asesor</h2>
-        <p className="text-sm text-[rgba(252,252,252,0.5)] mb-4">
-          Ingresá el teléfono o email del asesor. Le llegará un link de descarga.
+
+        <h2
+          style={{
+            fontSize: "15px",
+            fontWeight: 600,
+            color: "#fcfcfc",
+            marginBottom: "4px",
+          }}
+        >
+          Invitar asesor
+        </h2>
+        <p
+          style={{
+            fontSize: "13px",
+            color: "rgba(252,252,252,0.5)",
+            marginBottom: "16px",
+            lineHeight: 1.5,
+          }}
+        >
+          Ingresá el teléfono o email. El asesor recibirá un link de descarga e invitación.
         </p>
+
         <input
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder="+54 11 1234-5678 o email@empresa.com"
-          className="w-full bg-[#1a1a1a] border border-[rgba(255,255,255,0.1)] rounded-lg px-3.5 py-2.5 text-sm text-[#fcfcfc] placeholder:text-[rgba(252,252,252,0.3)] focus:outline-none focus:border-[#58b836] mb-4 transition-colors"
+          style={{
+            width: "100%",
+            background: "rgba(255,255,255,0.04)",
+            border: focused
+              ? "1px solid #a0ff79"
+              : "1px solid rgba(255,255,255,0.1)",
+            boxShadow: focused ? "0 0 0 3px rgba(160,255,121,0.18)" : "none",
+            borderRadius: "10px",
+            padding: "11px 14px",
+            fontSize: "14px",
+            color: "#fcfcfc",
+            outline: "none",
+            transition: "border-color 0.15s, box-shadow 0.15s",
+            marginBottom: "12px",
+            fontFamily: "inherit",
+            boxSizing: "border-box",
+          }}
         />
+
         <button
           onClick={handleSend}
           disabled={sent}
-          className="w-full bg-[#58b836] hover:bg-[#4ea32e] text-white font-semibold rounded-lg py-2.5 text-sm transition-colors disabled:opacity-60"
+          style={{
+            width: "100%",
+            background: sent ? "rgba(160,255,121,0.5)" : "#a0ff79",
+            color: "#1a1a1a",
+            fontWeight: 600,
+            fontSize: "14px",
+            border: "none",
+            borderRadius: "10px",
+            padding: "12px",
+            cursor: sent ? "default" : "pointer",
+            transition: "background 0.15s",
+            fontFamily: "inherit",
+          }}
         >
           {sent ? "¡Invitación enviada!" : "Enviar invitación"}
         </button>
@@ -206,93 +364,161 @@ function InviteModal({ onClose }: { onClose: () => void }) {
   );
 }
 
+const STAT_CARDS = [
+  {
+    icon: "schedule",
+    label: "Horas ahorradas esta semana",
+    value: "47.5h",
+    sub: "↑ 12% vs semana anterior",
+    subColor: "#a0ff79",
+  },
+  {
+    icon: "group",
+    label: "Promedio por asesor",
+    value: "9.5h",
+    sub: "/ semana",
+    subColor: "rgba(252,252,252,0.4)",
+  },
+  {
+    icon: "credit_card",
+    label: "Licencias activas",
+    value: "5 / 6",
+    sub: "1 pendiente de activación",
+    subColor: "rgb(217,119,6)",
+  },
+];
+
+const HEADER_CELL_STYLE: React.CSSProperties = {
+  padding: "8px 16px",
+  textAlign: "left",
+  fontSize: "12px",
+  fontWeight: 500,
+  color: "rgba(252,252,252,0.45)",
+  whiteSpace: "nowrap",
+  borderBottom: "1px solid rgba(255,255,255,0.06)",
+};
+
 export default function TeamPage() {
   const [showInvite, setShowInvite] = useState(false);
 
-  const statCards = [
-    {
-      icon: Clock,
-      label: "Horas ahorradas esta semana",
-      value: "47.5h",
-      sub: "↑ 12% vs semana anterior",
-      subColor: "#58b836",
-    },
-    {
-      icon: Users,
-      label: "Promedio por asesor",
-      value: "9.5h",
-      sub: "/ semana",
-      subColor: "rgba(252,252,252,0.4)",
-    },
-    {
-      icon: CreditCard,
-      label: "Licencias activas",
-      value: "5 / 6",
-      sub: "1 pendiente de activación",
-      subColor: "#f59e0b",
-    },
-  ];
-
-  const headerCls =
-    "px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-[rgba(252,252,252,0.4)] whitespace-nowrap";
-
   return (
-    <div className="px-6 py-6">
+    <div style={{ padding: "16px 16px", overflowY: "auto", height: "100%" }}>
       {showInvite && <InviteModal onClose={() => setShowInvite(false)} />}
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-lg font-semibold text-[#fcfcfc]">Equipo</h1>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "16px",
+        }}
+      >
+        <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc" }}>Equipo</h1>
         <button
           onClick={() => setShowInvite(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors"
-          style={{ background: "#58b836" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            padding: "7px 14px",
+            borderRadius: "8px",
+            fontSize: "13px",
+            fontWeight: 500,
+            border: "1px solid rgba(160,255,121,0.35)",
+            color: "#a0ff79",
+            background: "transparent",
+            cursor: "pointer",
+            transition: "background 0.15s",
+            fontFamily: "inherit",
+          }}
+          onMouseEnter={(e) =>
+            ((e.currentTarget as HTMLButtonElement).style.background =
+              "rgba(160,255,121,0.08)")
+          }
+          onMouseLeave={(e) =>
+            ((e.currentTarget as HTMLButtonElement).style.background = "transparent")
+          }
         >
-          + Invitar asesor
+          <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>
+            person_add
+          </span>
+          Invitar asesor
         </button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        {statCards.map((card) => (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "12px",
+          marginBottom: "16px",
+        }}
+      >
+        {STAT_CARDS.map((card) => (
           <div
             key={card.label}
-            className="rounded-xl p-5"
             style={{
-              background: "#282b2e",
+              borderRadius: "10px",
+              padding: "20px",
+              background: "#1f1f1f",
               border: "1px solid rgba(255,255,255,0.06)",
             }}
           >
-            <div className="flex items-center gap-2 mb-3">
-              <card.icon size={14} className="text-[rgba(252,252,252,0.4)]" />
-              <span className="text-xs text-[rgba(252,252,252,0.5)]">{card.label}</span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                marginBottom: "12px",
+              }}
+            >
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: "15px", color: "rgba(252,252,252,0.4)" }}
+              >
+                {card.icon}
+              </span>
+              <span style={{ fontSize: "12px", color: "rgba(252,252,252,0.5)" }}>
+                {card.label}
+              </span>
             </div>
-            <p className="text-2xl font-bold text-[#fcfcfc] mb-1">{card.value}</p>
-            <p className="text-xs" style={{ color: card.subColor }}>
-              {card.sub}
+            <p
+              style={{
+                fontSize: "26px",
+                fontWeight: 600,
+                color: "#fcfcfc",
+                marginBottom: "4px",
+                lineHeight: 1.1,
+              }}
+            >
+              {card.value}
             </p>
+            <p style={{ fontSize: "12px", color: card.subColor }}>{card.sub}</p>
           </div>
         ))}
       </div>
 
       {/* Members table */}
       <div
-        className="rounded-xl overflow-hidden"
         style={{
-          background: "#282b2e",
+          borderRadius: "10px",
+          overflow: "hidden",
           border: "1px solid rgba(255,255,255,0.06)",
+          background: "#1f1f1f",
         }}
       >
-        <table className="w-full border-collapse">
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
-            <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <th className={headerCls}>Miembro</th>
-              <th className={headerCls}>Estado</th>
-              <th className={headerCls}>Volt Cloud</th>
-              <th className={headerCls}>HubSpot</th>
-              <th className={headerCls}>Licencia</th>
-              <th className={headerCls}>Horas ahorradas</th>
-              <th className={headerCls}>Último activo</th>
+            <tr>
+              <th style={HEADER_CELL_STYLE}>Miembro</th>
+              <th style={HEADER_CELL_STYLE}>Estado</th>
+              <th style={HEADER_CELL_STYLE}>Volt Cloud</th>
+              <th style={HEADER_CELL_STYLE}>HubSpot</th>
+              <th style={HEADER_CELL_STYLE}>Licencia</th>
+              <th style={HEADER_CELL_STYLE}>Horas ahorradas</th>
+              <th style={HEADER_CELL_STYLE}>Último activo</th>
             </tr>
           </thead>
           <tbody>
@@ -302,48 +528,86 @@ export default function TeamPage() {
                 style={{
                   borderBottom:
                     i < MEMBERS.length - 1
-                      ? "1px solid rgba(255,255,255,0.04)"
+                      ? "1px solid rgba(255,255,255,0.06)"
                       : "none",
                 }}
               >
                 {/* Member */}
-                <td className="px-4 py-3.5">
-                  <div className="flex items-center gap-3">
+                <td style={{ padding: "12px 16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                      style={{ background: m.avatarColor }}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "50%",
+                        background: `rgba(${m.avatarRgb}, 0.2)`,
+                        border: `1px solid rgba(${m.avatarRgb}, 0.4)`,
+                        color: `rgb(${m.avatarRgb})`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        flexShrink: 0,
+                      }}
                     >
                       {m.initials}
                     </div>
-                    <span className="text-sm font-medium text-[#fcfcfc]">{m.name}</span>
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        color: "#fcfcfc",
+                      }}
+                    >
+                      {m.name}
+                    </span>
                   </div>
                 </td>
-                <td className="px-4 py-3.5">
-                  <StatusBadge status={m.status} />
+                <td style={{ padding: "12px 16px" }}>
+                  <StatusCell status={m.status} />
                 </td>
-                <td className="px-4 py-3.5">
-                  <VoltCloudStatus value={m.voltCloud} />
+                <td style={{ padding: "12px 16px" }}>
+                  <VoltCloudCell value={m.voltCloud} />
                 </td>
-                <td className="px-4 py-3.5">
-                  <HubSpotStatus value={m.hubspot} />
+                <td style={{ padding: "12px 16px" }}>
+                  <HubSpotCell value={m.hubspot} />
                 </td>
-                <td className="px-4 py-3.5">
-                  <LicenseStatus value={m.license} />
+                <td style={{ padding: "12px 16px" }}>
+                  <LicenseCell value={m.license} />
                 </td>
-                <td className="px-4 py-3.5">
+                <td style={{ padding: "12px 16px" }}>
                   {m.hoursSaved !== null ? (
-                    <span className="text-sm font-semibold text-[#fcfcfc]">
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        color: "#fcfcfc",
+                      }}
+                    >
                       {m.hoursSaved}h
                     </span>
                   ) : (
-                    <span className="text-[rgba(252,252,252,0.2)] text-sm">—</span>
+                    <span
+                      style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}
+                    >
+                      —
+                    </span>
                   )}
                 </td>
-                <td className="px-4 py-3.5">
+                <td style={{ padding: "12px 16px" }}>
                   {m.lastActive ? (
-                    <span className="text-sm text-[rgba(252,252,252,0.5)]">{m.lastActive}</span>
+                    <span
+                      style={{ fontSize: "13px", color: "rgba(252,252,252,0.5)" }}
+                    >
+                      {m.lastActive}
+                    </span>
                   ) : (
-                    <span className="text-[rgba(252,252,252,0.2)] text-sm">—</span>
+                    <span
+                      style={{ fontSize: "13px", color: "rgba(252,252,252,0.2)" }}
+                    >
+                      —
+                    </span>
                   )}
                 </td>
               </tr>

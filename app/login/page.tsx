@@ -18,61 +18,164 @@ export default function LoginPage() {
     }, 600);
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: "12px",
+    padding: "13px 14px",
+    fontSize: "15px",
+    color: "#fcfcfc",
+    outline: "none",
+    transition: "border-color 0.15s, box-shadow 0.15s",
+    fontFamily: "inherit",
+  };
+
+  function onFocus(e: React.FocusEvent<HTMLInputElement>) {
+    e.currentTarget.style.borderColor = "#a0ff79";
+    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(160,255,121,0.18)";
+  }
+
+  function onBlur(e: React.FocusEvent<HTMLInputElement>) {
+    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+    e.currentTarget.style.boxShadow = "none";
+  }
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#282b2e",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "380px",
+          animation: "volt-login-in 0.18s cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
+        <style>{`
+          @keyframes volt-login-in {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+
         {/* Logo */}
-        <div className="flex flex-col items-center mb-8">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl">⚡</span>
-            <span className="text-2xl font-bold tracking-tight text-[#fcfcfc]">Volt</span>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "32px",
+            gap: "6px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ fontSize: "28px", lineHeight: 1 }}>⚡</span>
+            <span style={{ fontSize: "22px", fontWeight: 600, color: "#fcfcfc", lineHeight: 1 }}>
+              Volt
+            </span>
           </div>
-          <p className="text-sm text-[rgba(252,252,252,0.5)]">Volt para WhatsApp</p>
+          <p
+            style={{
+              fontSize: "13px",
+              color: "rgba(252,252,252,0.5)",
+              fontWeight: 500,
+              letterSpacing: "0.01em",
+            }}
+          >
+            Workspace Manager
+          </p>
         </div>
 
-        {/* Card */}
-        <div className="bg-[#282b2e] rounded-2xl p-8 border border-[rgba(255,255,255,0.08)]">
-          <h1 className="text-xl font-semibold text-[#fcfcfc] mb-1">Workspace Manager</h1>
-          <p className="text-sm text-[rgba(252,252,252,0.5)] mb-6">Iniciá sesión en tu cuenta</p>
-
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium text-[rgba(252,252,252,0.6)] uppercase tracking-wider">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@email.com"
-                className="bg-[#1a1a1a] border border-[rgba(255,255,255,0.1)] rounded-lg px-3.5 py-2.5 text-sm text-[#fcfcfc] placeholder:text-[rgba(252,252,252,0.3)] focus:outline-none focus:border-[#58b836] transition-colors"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium text-[rgba(252,252,252,0.6)] uppercase tracking-wider">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="bg-[#1a1a1a] border border-[rgba(255,255,255,0.1)] rounded-lg px-3.5 py-2.5 text-sm text-[#fcfcfc] placeholder:text-[rgba(252,252,252,0.3)] focus:outline-none focus:border-[#58b836] transition-colors"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-2 bg-[#58b836] hover:bg-[#4ea32e] text-white font-semibold rounded-lg py-2.5 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        {/* Form */}
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <label
+              style={{
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "rgba(252,252,252,0.55)",
+              }}
             >
-              {loading ? "Iniciando sesión..." : "Iniciar sesión"}
-            </button>
-          </form>
-        </div>
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="tu@empresa.com"
+              style={inputStyle}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          </div>
 
-        <p className="text-center text-xs text-[rgba(252,252,252,0.3)] mt-6">
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <label
+              style={{
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "rgba(252,252,252,0.55)",
+              }}
+            >
+              Contraseña
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              style={inputStyle}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              marginTop: "4px",
+              width: "100%",
+              background: loading ? "rgba(160,255,121,0.6)" : "#a0ff79",
+              color: "#1a1a1a",
+              fontWeight: 600,
+              fontSize: "15px",
+              border: "none",
+              borderRadius: "12px",
+              padding: "14px",
+              cursor: loading ? "not-allowed" : "pointer",
+              transition: "background 0.15s",
+              fontFamily: "inherit",
+            }}
+            onMouseEnter={(e) => {
+              if (!loading)
+                (e.currentTarget as HTMLButtonElement).style.background = "#b8ff96";
+            }}
+            onMouseLeave={(e) => {
+              if (!loading)
+                (e.currentTarget as HTMLButtonElement).style.background = "#a0ff79";
+            }}
+          >
+            {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+          </button>
+        </form>
+
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "11px",
+            color: "rgba(252,252,252,0.25)",
+            marginTop: "24px",
+          }}
+        >
           © 2026 Volt · WhatsApp Superpowers
         </p>
       </div>
