@@ -21,7 +21,7 @@ export default function DashboardLayout({
   }, [router]);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#1a1a1a]">
+    <div className="flex h-screen overflow-hidden" style={{ background: "#141414" }}>
       <Sidebar />
       <main className="flex-1 overflow-y-auto">{children}</main>
     </div>

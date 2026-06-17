@@ -11,6 +11,12 @@ const funnelSans = Funnel_Sans({
 export const metadata: Metadata = {
   title: "Workspace Manager — Volt",
   description: "Gestión de workspace y equipo para Volt",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

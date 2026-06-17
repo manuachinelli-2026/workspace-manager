@@ -94,8 +94,8 @@ export default function BillingPage() {
   const nextUserCost = plan.pricePerUser;
 
   return (
-    <div style={{ padding: "16px", maxWidth: "900px", overflowY: "auto", height: "100%" }}>
-      <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc", marginBottom: "16px" }}>
+    <div style={{ padding: "24px 28px", maxWidth: "900px", overflowY: "auto", height: "100%" }}>
+      <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc", marginBottom: "20px" }}>
         Billing
       </h1>
 
@@ -148,8 +148,8 @@ export default function BillingPage() {
 
           <button
             style={{
-              padding: "7px 14px", borderRadius: "8px", fontSize: "13px", fontWeight: 500,
-              border: "1px solid rgba(255,255,255,0.1)", color: "rgba(252,252,252,0.6)",
+              padding: "7px 16px", borderRadius: "9999px", fontSize: "13px", fontWeight: 500,
+              border: "1px solid rgba(255,255,255,0.12)", color: "rgba(252,252,252,0.6)",
               background: "transparent", cursor: "pointer", transition: "border-color 0.15s, color 0.15s",
               fontFamily: "inherit",
             }}
@@ -253,10 +253,10 @@ export default function BillingPage() {
               <div style={{ marginTop: "20px", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "14px" }}>
                 <button
                   style={{
-                    width: "100%", padding: "9px", borderRadius: "8px", fontSize: "13px", fontWeight: 600,
-                    border: "none",
-                    background: isCurrent ? "rgba(255,255,255,0.07)" : "#1a1a1a",
-                    color: isCurrent ? "rgba(252,252,252,0.5)" : "#fcfcfc",
+                    width: "100%", padding: "9px", borderRadius: "9999px", fontSize: "13px", fontWeight: 600,
+                    border: isCurrent ? "none" : "1px solid rgba(160,255,121,0.4)",
+                    background: isCurrent ? "rgba(255,255,255,0.07)" : "transparent",
+                    color: isCurrent ? "rgba(252,252,252,0.5)" : "#a0ff79",
                     cursor: isCurrent ? "default" : "pointer",
                     fontFamily: "inherit",
                     transition: "background 0.15s",

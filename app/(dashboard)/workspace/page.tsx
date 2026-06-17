@@ -178,7 +178,7 @@ function InviteModal({ onClose, onPending, onAdded }: InviteModalProps) {
         <button
           onClick={handleSend}
           disabled={state === "loading" || state === "added" || state === "pending"}
-          style={{ width: "100%", background: stateColor[state], color: state === "pending" ? "#1a1a1a" : "#1a1a1a", fontWeight: 600, fontSize: "14px", border: "none", borderRadius: "10px", padding: "12px", cursor: (state === "loading" || state === "added" || state === "pending") ? "default" : "pointer", fontFamily: "inherit", transition: "background 0.15s" }}
+          style={{ width: "100%", background: stateColor[state], color: "#1a1a1a", fontWeight: 700, fontSize: "14px", border: "none", borderRadius: "9999px", padding: "12px", cursor: (state === "loading" || state === "added" || state === "pending") ? "default" : "pointer", fontFamily: "inherit", transition: "background 0.15s" }}
         >
           {state === "loading"
             ? <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
@@ -288,7 +288,7 @@ export default function WorkspacePage() {
   const connectedCloud = members.filter((m) => m.voltCloud === "connected").length;
 
   return (
-    <div style={{ padding: "16px", overflowY: "auto", height: "100%" }}>
+    <div style={{ padding: "24px 28px", overflowY: "auto", height: "100%" }}>
       <style>{`@keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }`}</style>
 
       {showInvite && (
@@ -302,16 +302,16 @@ export default function WorkspacePage() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
         <div>
-          <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc" }}>Workspace</h1>
+          <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc" }}>Workspace</h1>
           {updatedAt && (
             <span style={{ fontSize: "11px", color: "rgba(252,252,252,0.3)" }}>
               Updated {new Date(updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
             </span>
           )}
         </div>
-        <button onClick={() => setShowInvite(true)} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: 500, border: "1px solid rgba(160,255,121,0.35)", color: "#a0ff79", background: "transparent", cursor: "pointer", transition: "background 0.15s", fontFamily: "inherit" }}
-          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "rgba(160,255,121,0.08)")}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "transparent")}>
+        <button onClick={() => setShowInvite(true)} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "7px 16px", borderRadius: "9999px", fontSize: "13px", fontWeight: 600, border: "1px solid rgba(160,255,121,0.4)", color: "#a0ff79", background: "transparent", cursor: "pointer", transition: "background 0.15s, box-shadow 0.15s", fontFamily: "inherit" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(160,255,121,0.1)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 0 1px rgba(160,255,121,0.3)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "none"; }}>
           <span className="material-symbols-outlined" style={{ fontSize: "15px" }}>person_add</span>
           Invite
         </button>

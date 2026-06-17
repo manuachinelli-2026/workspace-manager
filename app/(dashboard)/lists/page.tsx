@@ -164,7 +164,7 @@ function AddListModal({ onClose, onSave }: { onClose: () => void; onSave: (list:
           <button
             onClick={handleSearch}
             disabled={!canSearch}
-            style={{ width: "100%", background: canSearch ? "#a0ff79" : "rgba(160,255,121,0.2)", color: canSearch ? "#1a1a1a" : "rgba(26,26,26,0.5)", fontWeight: 600, fontSize: "14px", border: "none", borderRadius: "10px", padding: "12px", cursor: canSearch ? "pointer" : "default", transition: "background 0.15s", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: "7px" }}
+            style={{ width: "100%", background: canSearch ? "#a0ff79" : "rgba(160,255,121,0.2)", color: canSearch ? "#1a1a1a" : "rgba(26,26,26,0.5)", fontWeight: 700, fontSize: "14px", border: "none", borderRadius: "9999px", padding: "12px", cursor: canSearch ? "pointer" : "default", transition: "background 0.15s", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: "7px" }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>auto_awesome</span>
             Search with AI
@@ -173,12 +173,12 @@ function AddListModal({ onClose, onSave }: { onClose: () => void; onSave: (list:
 
         {step === "done" && (
           <div style={{ display: "flex", gap: "8px" }}>
-            <button onClick={() => setStep("idle")} style={{ flex: 1, background: "transparent", color: "rgba(252,252,252,0.5)", fontWeight: 500, fontSize: "14px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", padding: "11px", cursor: "pointer", fontFamily: "inherit", transition: "border-color 0.15s" }}
+            <button onClick={() => setStep("idle")} style={{ flex: 1, background: "transparent", color: "rgba(252,252,252,0.5)", fontWeight: 500, fontSize: "14px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "9999px", padding: "11px", cursor: "pointer", fontFamily: "inherit", transition: "border-color 0.15s" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.2)")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.1)")}>
               Search again
             </button>
-            <button onClick={handleSave} style={{ flex: 2, background: "#a0ff79", color: "#1a1a1a", fontWeight: 600, fontSize: "14px", border: "none", borderRadius: "10px", padding: "11px", cursor: "pointer", fontFamily: "inherit" }}>
+            <button onClick={handleSave} style={{ flex: 2, background: "#a0ff79", color: "#1a1a1a", fontWeight: 700, fontSize: "14px", border: "none", borderRadius: "9999px", padding: "11px", cursor: "pointer", fontFamily: "inherit" }}>
               Save list
             </button>
           </div>
@@ -220,7 +220,7 @@ export default function ListsPage() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          style={{ display: "flex", alignItems: "center", gap: "6px", padding: "7px 14px", borderRadius: "8px", fontSize: "13px", fontWeight: 500, border: "none", background: "#a0ff79", color: "#1a1a1a", cursor: "pointer", fontFamily: "inherit" }}
+          style={{ display: "flex", alignItems: "center", gap: "6px", padding: "7px 16px", borderRadius: "9999px", fontSize: "13px", fontWeight: 700, border: "none", background: "#a0ff79", color: "#1a1a1a", cursor: "pointer", fontFamily: "inherit", transition: "background 0.15s, box-shadow 0.15s" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: "15px" }}>add</span>
           Add list
@@ -238,7 +238,7 @@ export default function ListsPage() {
           </p>
           <button
             onClick={() => setShowModal(true)}
-            style={{ marginTop: "4px", display: "flex", alignItems: "center", gap: "6px", padding: "7px 16px", borderRadius: "8px", fontSize: "13px", fontWeight: 500, border: "1px solid rgba(160,255,121,0.35)", color: "#a0ff79", background: "transparent", cursor: "pointer", fontFamily: "inherit" }}
+            style={{ marginTop: "4px", display: "flex", alignItems: "center", gap: "6px", padding: "7px 18px", borderRadius: "9999px", fontSize: "13px", fontWeight: 600, border: "1px solid rgba(160,255,121,0.4)", color: "#a0ff79", background: "transparent", cursor: "pointer", fontFamily: "inherit", transition: "background 0.15s" }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>auto_awesome</span>
             Create your first list

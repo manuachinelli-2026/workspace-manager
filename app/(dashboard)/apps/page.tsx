@@ -191,7 +191,7 @@ function IntegrationCard({ app }: { app: Integration }) {
             ? {
                 width: "100%",
                 padding: "8px",
-                borderRadius: "8px",
+                borderRadius: "9999px",
                 fontSize: "13px",
                 fontWeight: 500,
                 border: "none",
@@ -204,10 +204,10 @@ function IntegrationCard({ app }: { app: Integration }) {
             : {
                 width: "100%",
                 padding: "8px",
-                borderRadius: "8px",
+                borderRadius: "9999px",
                 fontSize: "13px",
-                fontWeight: 500,
-                border: "1px solid rgba(160,255,121,0.35)",
+                fontWeight: 600,
+                border: "1px solid rgba(160,255,121,0.4)",
                 background: "transparent",
                 color: "#a0ff79",
                 cursor: "pointer",
@@ -239,13 +239,13 @@ export default function AppsPage() {
   const available = INTEGRATIONS.filter((i) => !i.connected);
 
   return (
-    <div style={{ padding: "16px", overflowY: "auto", height: "100%" }}>
+    <div style={{ padding: "24px 28px", overflowY: "auto", height: "100%" }}>
       {/* Header */}
-      <div style={{ marginBottom: "20px" }}>
-        <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc", marginBottom: "4px" }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc", marginBottom: "4px" }}>
           App Store
         </h1>
-        <p style={{ fontSize: "13px", color: "rgba(252,252,252,0.5)" }}>
+        <p style={{ fontSize: "13px", color: "rgba(252,252,252,0.45)" }}>
           Connect Volt with your work tools
         </p>
       </div>
