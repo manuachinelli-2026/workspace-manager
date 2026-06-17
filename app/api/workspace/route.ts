@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchWorkspaceData } from "@/lib/voltApiScraper";
 
-// Revalidate cached data every 60 seconds
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const workspaceId = process.env.VOLT_WORKSPACE_ID;
@@ -10,14 +9,13 @@ export async function GET() {
     return NextResponse.json({ error: "VOLT_WORKSPACE_ID not configured" }, { status: 500 });
   }
 
-  const data = await fetchWorkspaceData(workspaceId);
-  if (!data) {
-    return NextResponse.json({ error: "Failed to fetch workspace data" }, { status: 502 });
+  try {
+    const data = await fetchWorkspaceData(workspaceId);
+    if (!data) {
+      return NextResponse.json({ error: "Auth failed or workspace not found" }, { status: 502 });
+    }
+    return NextResponse.json(data);
+  } catch (e) {
+    return NextResponse.json({ error: String(e) }, { status: 500 });
   }
-
-  return NextResponse.json(data, {
-    headers: {
-      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
-    },
-  });
 }
