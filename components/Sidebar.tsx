@@ -38,23 +38,14 @@ export default function Sidebar() {
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          flexDirection: "column",
+          gap: "6px",
         }}
       >
-        <span
-          style={{
-            fontSize: "18px",
-            color: "#a0ff79",
-            lineHeight: 1,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          ⚡
-        </span>
-        <span style={{ fontSize: "14px", fontWeight: 600, lineHeight: 1 }}>
-          <span style={{ color: "#fcfcfc" }}>Workspace</span>{" "}
-          <span style={{ color: "#a0ff79" }}>Manager</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo_white.svg" alt="Volt" style={{ height: "22px", width: "auto" }} />
+        <span style={{ fontSize: "11px", fontWeight: 500, color: "rgba(252,252,252,0.4)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          Workspace Manager
         </span>
       </div>
 
