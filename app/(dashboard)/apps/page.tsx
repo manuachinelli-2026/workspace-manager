@@ -105,20 +105,20 @@ export default function AppsPage() {
                 display: "flex",
                 flexDirection: "column",
                 gap: "16px",
-                background: "#1f1f1f",
+                background: "#282b2e",
                 border: "1px solid rgba(255,255,255,0.06)",
                 transition: "border-color 0.15s, background 0.15s",
                 cursor: "default",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.borderColor =
-                  "rgba(160,255,121,0.25)";
-                (e.currentTarget as HTMLDivElement).style.background = "#252525";
+                  "rgba(160,255,121,0.2)";
+                (e.currentTarget as HTMLDivElement).style.background = "#2e3135";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLDivElement).style.borderColor =
                   "rgba(255,255,255,0.06)";
-                (e.currentTarget as HTMLDivElement).style.background = "#1f1f1f";
+                (e.currentTarget as HTMLDivElement).style.background = "#282b2e";
               }}
             >
               {/* Top row */}

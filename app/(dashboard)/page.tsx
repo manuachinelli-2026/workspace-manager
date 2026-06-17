@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function TeamPage() {
+export default function DashboardHome() {
   redirect("/workspace");
 }

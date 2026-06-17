@@ -77,11 +77,13 @@ function CheckOrDash({ value }: { value: boolean }) {
 const HEADER_CELL: React.CSSProperties = {
   padding: "8px 16px",
   textAlign: "left",
-  fontSize: "12px",
+  fontSize: "11px",
   fontWeight: 500,
-  color: "rgba(252,252,252,0.45)",
+  color: "rgba(252,252,252,0.4)",
   whiteSpace: "nowrap",
   borderBottom: "1px solid rgba(255,255,255,0.06)",
+  textTransform: "uppercase",
+  letterSpacing: "0.05em",
 };
 
 export default function BillingPage() {
@@ -276,7 +278,7 @@ export default function BillingPage() {
         }}
       >
         <div style={{ padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-          <h2 style={{ fontSize: "13px", fontWeight: 600, color: "#fcfcfc" }}>License breakdown</h2>
+          <h2 style={{ fontSize: "11px", fontWeight: 500, color: "rgba(252,252,252,0.4)", textTransform: "uppercase", letterSpacing: "0.05em" }}>License breakdown</h2>
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
@@ -375,7 +377,7 @@ export default function BillingPage() {
         }}
       >
         <div style={{ padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-          <h2 style={{ fontSize: "13px", fontWeight: 600, color: "#fcfcfc" }}>Payment history</h2>
+          <h2 style={{ fontSize: "11px", fontWeight: 500, color: "rgba(252,252,252,0.4)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Payment history</h2>
         </div>
         {PAYMENT_HISTORY.map((payment, i) => (
           <div

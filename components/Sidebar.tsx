@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
-  { label: "CRM View",      href: "/crm",     icon: "table_chart" },
-  { label: "Users",         href: "/team",    icon: "group" },
-  { label: "App Store",     href: "/apps",    icon: "extension" },
-  { label: "Billing",       href: "/billing", icon: "credit_card" },
+  { label: "Workspace",     href: "/workspace", icon: "group" },
+  { label: "CRM View",      href: "/crm",       icon: "table_chart" },
+  { label: "App Store",     href: "/apps",      icon: "extension" },
+  { label: "Billing",       href: "/billing",   icon: "credit_card" },
 ] as const;
 
 export default function Sidebar() {
