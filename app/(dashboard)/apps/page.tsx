@@ -236,7 +236,7 @@ export default function AppsPage() {
 
   return (
     <div style={{ padding: "24px 28px", overflowY: "auto", height: "100%" }}>
-      <div style={{ maxWidth: "720px" }}>
+      <div style={{ maxWidth: "720px", margin: "0 auto" }}>
         {/* Header */}
         <div style={{ marginBottom: "24px" }}>
           <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc", marginBottom: "4px" }}>
