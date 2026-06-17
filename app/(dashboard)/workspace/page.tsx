@@ -300,22 +300,50 @@ export default function WorkspacePage() {
       )}
 
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-        <div>
-          <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc" }}>Workspace</h1>
-          {updatedAt && (
-            <span style={{ fontSize: "11px", color: "rgba(252,252,252,0.3)" }}>
-              Updated {new Date(updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-            </span>
-          )}
-        </div>
-        <button onClick={() => setShowInvite(true)} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "7px 16px", borderRadius: "9999px", fontSize: "13px", fontWeight: 600, border: "1px solid rgba(160,255,121,0.4)", color: "#a0ff79", background: "transparent", cursor: "pointer", transition: "background 0.15s, box-shadow 0.15s", fontFamily: "inherit" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(160,255,121,0.1)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 0 1px rgba(160,255,121,0.3)"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "none"; }}>
-          <span className="material-symbols-outlined" style={{ fontSize: "15px" }}>person_add</span>
-          Invite
-        </button>
+      <div style={{ marginBottom: "16px" }}>
+        <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc" }}>Workspace</h1>
+        {updatedAt && (
+          <span style={{ fontSize: "11px", color: "rgba(252,252,252,0.3)" }}>
+            Updated {new Date(updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+          </span>
+        )}
       </div>
+
+      {/* FAB — Add new user */}
+      <button
+        onClick={() => setShowInvite(true)}
+        style={{
+          position: "fixed",
+          bottom: "24px",
+          right: "28px",
+          zIndex: 40,
+          display: "flex",
+          alignItems: "center",
+          gap: "7px",
+          padding: "10px 18px",
+          borderRadius: "9999px",
+          fontSize: "13px",
+          fontWeight: 600,
+          border: "none",
+          background: "#a0ff79",
+          color: "#111111",
+          cursor: "pointer",
+          transition: "background 0.15s, box-shadow 0.15s",
+          fontFamily: "inherit",
+          boxShadow: "0 4px 20px rgba(160,255,121,0.25)",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.background = "#b8ff96";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 24px rgba(160,255,121,0.4)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.background = "#a0ff79";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(160,255,121,0.25)";
+        }}
+      >
+        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>person_add</span>
+        Add new user
+      </button>
 
       {/* Live stats bar */}
       <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", padding: "14px 16px", borderRadius: "10px", background: "#282b2e", border: "1px solid rgba(255,255,255,0.06)" }}>
