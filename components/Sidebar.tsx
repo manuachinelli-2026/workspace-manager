@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { label: "Workspace",     href: "/workspace", icon: "group" },
   { label: "CRM View",      href: "/crm",       icon: "table_chart" },
   { label: "App Store",     href: "/apps",      icon: "extension" },
+  { label: "Manage Lists",  href: "/lists",     icon: "format_list_bulleted" },
   { label: "Billing",       href: "/billing",   icon: "credit_card" },
 ] as const;
 
