@@ -207,14 +207,14 @@ export default function ListsPage() {
   }
 
   return (
-    <div style={{ padding: "16px", overflowY: "auto", height: "100%" }}>
+    <div style={{ padding: "24px 28px", overflowY: "auto", height: "100%" }}>
       {showModal && <AddListModal onClose={() => setShowModal(false)} onSave={handleSave} />}
 
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
         <div>
-          <h1 style={{ fontSize: "22px", fontWeight: 400, color: "#fcfcfc" }}>Manage Lists</h1>
-          <p style={{ fontSize: "13px", color: "rgba(252,252,252,0.45)", marginTop: "2px" }}>
+          <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc" }}>Manage Lists</h1>
+          <p style={{ fontSize: "13px", color: "rgba(252,252,252,0.45)", marginTop: "3px" }}>
             AI-powered chat lists shared across your workspace
           </p>
         </div>
