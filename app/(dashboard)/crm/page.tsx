@@ -7,45 +7,104 @@ import CrmTable from "@/components/crm/CrmTable";
 const CHAT_TABS = ["All chats", "Contacts", "Groups"];
 const VIEW_TABS = ["All", "Needs reply", "Pipeline", "Customers", "Follow-ups due"];
 
-const AVATAR_COLORS = [
-  "71, 105, 134",
-  "13, 148, 136",
-  "139, 92, 246",
-  "217, 119, 6",
-  "219, 39, 119",
-  "59, 130, 246",
-];
+const STAGES = ["All stages", "Lead", "Closing", "Won", "Lost"];
 
-function memberAvatarColor(name: string) {
-  let h = 0;
-  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
-  return AVATAR_COLORS[h % AVATAR_COLORS.length];
-}
+const ALL_REGIONS = ["All regions", ...Array.from(
+  new Set(CRM_ROWS.map((r) => r.region).filter(Boolean) as string[])
+).sort()];
 
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? "")
-    .join("");
+const SELECT_STYLE: React.CSSProperties = {
+  appearance: "none",
+  background: "rgba(255,255,255,0.05)",
+  border: "1px solid rgba(255,255,255,0.08)",
+  borderRadius: "8px",
+  padding: "5px 28px 5px 10px",
+  fontSize: "13px",
+  color: "rgba(252,252,252,0.75)",
+  cursor: "pointer",
+  outline: "none",
+  fontFamily: "inherit",
+  transition: "border-color 0.12s",
+};
+
+function FilterSelect({
+  value,
+  onChange,
+  options,
+  icon,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  icon: string;
+}) {
+  const isActive = value !== options[0];
+  return (
+    <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+      <span
+        className="material-symbols-outlined"
+        style={{
+          position: "absolute",
+          left: "8px",
+          fontSize: "14px",
+          color: isActive ? "#a0ff79" : "rgba(252,252,252,0.3)",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+      >
+        {icon}
+      </span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          ...SELECT_STYLE,
+          paddingLeft: "26px",
+          borderColor: isActive ? "rgba(160,255,121,0.35)" : "rgba(255,255,255,0.08)",
+          color: isActive ? "#a0ff79" : "rgba(252,252,252,0.75)",
+        }}
+      >
+        {options.map((o) => (
+          <option key={o} value={o} style={{ background: "#1f1f1f", color: "#fcfcfc" }}>
+            {o}
+          </option>
+        ))}
+      </select>
+      <span
+        className="material-symbols-outlined"
+        style={{
+          position: "absolute",
+          right: "6px",
+          fontSize: "14px",
+          color: "rgba(252,252,252,0.3)",
+          pointerEvents: "none",
+        }}
+      >
+        expand_more
+      </span>
+    </div>
+  );
 }
 
 export default function CrmPage() {
-  const [activeMember, setActiveMember] = useState("All");
-  const [chatTab, setChatTab] = useState("All chats");
-  const [viewTab, setViewTab] = useState("All");
-  const [search, setSearch] = useState("");
+  const [assignedTo, setAssignedTo]   = useState("All");
+  const [chatTab, setChatTab]         = useState("All chats");
+  const [viewTab, setViewTab]         = useState("All");
+  const [stage, setStage]             = useState("All stages");
+  const [region, setRegion]           = useState("All regions");
+  const [search, setSearch]           = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
 
   const filteredRows = CRM_ROWS.filter((row) => {
-    if (activeMember !== "All" && row.assignedTo !== activeMember) return false;
+    if (assignedTo !== "All" && row.assignedTo !== assignedTo) return false;
     if (chatTab === "Contacts" && row.isGroup) return false;
     if (chatTab === "Groups" && !row.isGroup) return false;
     if (viewTab === "Needs reply" && row.direction !== "in") return false;
     if (viewTab === "Pipeline" && !row.stage) return false;
     if (viewTab === "Customers" && row.relationship !== "customer") return false;
     if (viewTab === "Follow-ups due" && !row.followUp) return false;
+    if (stage !== "All stages" && row.stage !== stage.toLowerCase()) return false;
+    if (region !== "All regions" && row.region !== region) return false;
     if (search) {
       const q = search.toLowerCase();
       if (!row.name.toLowerCase().includes(q) && !row.lastMessage.toLowerCase().includes(q))
@@ -54,17 +113,19 @@ export default function CrmPage() {
     return true;
   });
 
-  function TabBtn({
-    label,
-    active,
-    onClick,
-    count,
-  }: {
-    label: string;
-    active: boolean;
-    onClick: () => void;
-    count?: number;
-  }) {
+  const activeFilterCount = [
+    assignedTo !== "All",
+    stage !== "All stages",
+    region !== "All regions",
+  ].filter(Boolean).length;
+
+  function clearFilters() {
+    setAssignedTo("All");
+    setStage("All stages");
+    setRegion("All regions");
+  }
+
+  function TabBtn({ label, active, onClick, count }: { label: string; active: boolean; onClick: () => void; count?: number }) {
     return (
       <button
         onClick={onClick}
@@ -82,257 +143,110 @@ export default function CrmPage() {
           gap: "6px",
           whiteSpace: "nowrap",
           boxShadow: active ? "0 1px 2px rgba(0,0,0,0.3)" : "none",
-          transition: "color 0.15s",
+          transition: "color 0.12s",
           fontFamily: "inherit",
         }}
-        onMouseEnter={(e) => {
-          if (!active)
-            (e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.8)";
-        }}
-        onMouseLeave={(e) => {
-          if (!active)
-            (e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.5)";
-        }}
+        onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.8)"; }}
+        onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.5)"; }}
       >
         {label}
         {count !== undefined && (
-          <span
-            style={{
-              fontSize: "11px",
-              color: "rgba(252,252,252,0.35)",
-              fontWeight: 400,
-            }}
-          >
-            {count}
-          </span>
+          <span style={{ fontSize: "11px", color: "rgba(252,252,252,0.35)", fontWeight: 400 }}>{count}</span>
         )}
       </button>
     );
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        minHeight: 0,
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
       {/* Header area */}
       <div style={{ padding: "16px 16px 0", flexShrink: 0 }}>
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: 400,
-            color: "#fcfcfc",
-            marginBottom: "12px",
-          }}
-        >
+        <h1 style={{ fontSize: "20px", fontWeight: 500, color: "#fcfcfc", marginBottom: "12px" }}>
           CRM
         </h1>
 
-        {/* Team member filter */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            marginBottom: "10px",
-            flexWrap: "wrap",
-          }}
-        >
-          {TEAM_MEMBERS.map((member) => {
-            const active = activeMember === member;
-            const isAll = member === "All";
-            const rgb = memberAvatarColor(member);
-            return (
-              <button
-                key={member}
-                onClick={() => setActiveMember(member)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  padding: isAll ? "4px 12px" : "4px 10px 4px 5px",
-                  borderRadius: "9999px",
-                  fontSize: "13px",
-                  fontWeight: 500,
-                  border: active
-                    ? "1px solid rgba(160,255,121,0.35)"
-                    : "1px solid rgba(255,255,255,0.08)",
-                  background: active ? "rgba(160,255,121,0.1)" : "rgba(255,255,255,0.04)",
-                  color: active ? "#a0ff79" : "rgba(252,252,252,0.6)",
-                  cursor: "pointer",
-                  transition: "all 0.15s",
-                  fontFamily: "inherit",
-                }}
-                onMouseEnter={(e) => {
-                  if (!active) {
-                    (e.currentTarget as HTMLButtonElement).style.background =
-                      "rgba(255,255,255,0.07)";
-                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.8)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!active) {
-                    (e.currentTarget as HTMLButtonElement).style.background =
-                      "rgba(255,255,255,0.04)";
-                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.6)";
-                  }
-                }}
-              >
-                {!isAll && (
-                  <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      borderRadius: "50%",
-                      background: `rgba(${rgb}, 0.25)`,
-                      border: `1px solid rgba(${rgb}, 0.4)`,
-                      color: `rgb(${rgb})`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "9px",
-                      fontWeight: 600,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {initials(member)}
-                  </div>
-                )}
-                {member}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Toolbar: tabs + right controls */}
+        {/* Toolbar: tabs + filters + right controls */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: "12px",
-            paddingBottom: "0",
+            paddingBottom: "10px",
             borderBottom: "1px solid rgba(255,255,255,0.06)",
+            flexWrap: "wrap",
           }}
         >
           {/* Left: tab groups */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {/* Chat type segmented */}
-            <div
-              style={{
-                display: "flex",
-                background: "#252525",
-                borderRadius: "8px",
-                padding: "2px",
-                gap: "2px",
-              }}
-            >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", background: "#252525", borderRadius: "8px", padding: "2px", gap: "2px" }}>
               {CHAT_TABS.map((tab) => (
-                <TabBtn
-                  key={tab}
-                  label={tab}
-                  active={chatTab === tab}
-                  onClick={() => setChatTab(tab)}
-                  count={tab === "All chats" ? filteredRows.length : undefined}
-                />
+                <TabBtn key={tab} label={tab} active={chatTab === tab} onClick={() => setChatTab(tab)}
+                  count={tab === "All chats" ? filteredRows.length : undefined} />
               ))}
             </div>
 
-            {/* Divider */}
-            <div
-              style={{
-                width: "1px",
-                height: "20px",
-                background: "rgba(255,255,255,0.06)",
-                flexShrink: 0,
-              }}
-            />
+            <div style={{ width: "1px", height: "20px", background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
 
-            {/* View segmented */}
-            <div
-              style={{
-                display: "flex",
-                background: "#252525",
-                borderRadius: "8px",
-                padding: "2px",
-                gap: "2px",
-              }}
-            >
+            <div style={{ display: "flex", background: "#252525", borderRadius: "8px", padding: "2px", gap: "2px" }}>
               {VIEW_TABS.map((tab) => (
-                <TabBtn
-                  key={tab}
-                  label={tab}
-                  active={viewTab === tab}
-                  onClick={() => setViewTab(tab)}
-                />
+                <TabBtn key={tab} label={tab} active={viewTab === tab} onClick={() => setViewTab(tab)} />
               ))}
             </div>
+
+            <div style={{ width: "1px", height: "20px", background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+
+            {/* Dropdowns */}
+            <FilterSelect
+              value={assignedTo === "All" ? "All" : assignedTo}
+              onChange={setAssignedTo}
+              options={TEAM_MEMBERS}
+              icon="person"
+            />
+            <FilterSelect value={stage} onChange={setStage} options={STAGES} icon="flag" />
+            <FilterSelect value={region} onChange={setRegion} options={ALL_REGIONS} icon="language" />
+
+            {activeFilterCount > 0 && (
+              <button
+                onClick={clearFilters}
+                style={{
+                  display: "flex", alignItems: "center", gap: "4px",
+                  fontSize: "12px", color: "rgba(252,252,252,0.4)",
+                  background: "none", border: "none", cursor: "pointer",
+                  fontFamily: "inherit", padding: "4px 6px", borderRadius: "6px",
+                  transition: "color 0.12s",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(239,68,68,0.8)")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.4)")}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: "13px" }}>close</span>
+                Clear {activeFilterCount > 1 ? `${activeFilterCount} filters` : "filter"}
+              </button>
+            )}
           </div>
 
           {/* Right: record count + import + search */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              paddingBottom: "2px",
-              flexShrink: 0,
-            }}
-          >
-            <span
-              style={{ fontSize: "12px", color: "rgba(252,252,252,0.35)", whiteSpace: "nowrap" }}
-            >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+            <span style={{ fontSize: "12px", color: "rgba(252,252,252,0.35)", whiteSpace: "nowrap" }}>
               {filteredRows.length} records
             </span>
 
             <button
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                padding: "5px 12px",
-                borderRadius: "8px",
-                fontSize: "13px",
-                fontWeight: 500,
-                border: "1px solid rgba(160,255,121,0.35)",
-                color: "#a0ff79",
-                background: "transparent",
-                cursor: "pointer",
-                transition: "background 0.15s",
-                fontFamily: "inherit",
+                display: "flex", alignItems: "center", gap: "6px",
+                padding: "5px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: 500,
+                border: "1px solid rgba(160,255,121,0.35)", color: "#a0ff79",
+                background: "transparent", cursor: "pointer", transition: "background 0.15s", fontFamily: "inherit",
               }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLButtonElement).style.background =
-                  "rgba(160,255,121,0.08)")
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLButtonElement).style.background = "transparent")
-              }
+              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "rgba(160,255,121,0.08)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "transparent")}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>
-                upload
-              </span>
+              <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>upload</span>
               Import
             </button>
 
-            {/* Search */}
             <div style={{ position: "relative" }}>
-              <span
-                className="material-symbols-outlined"
-                style={{
-                  position: "absolute",
-                  left: "8px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "15px",
-                  color: "rgba(252,252,252,0.3)",
-                  pointerEvents: "none",
-                }}
-              >
+              <span className="material-symbols-outlined" style={{ position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "15px", color: "rgba(252,252,252,0.3)", pointerEvents: "none" }}>
                 search
               </span>
               <input
@@ -343,17 +257,10 @@ export default function CrmPage() {
                 placeholder="Search"
                 style={{
                   background: "rgba(255,255,255,0.06)",
-                  border: searchFocused
-                    ? "1px solid #a0ff79"
-                    : "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: "8px",
-                  padding: "6px 10px 6px 30px",
-                  width: "200px",
-                  fontSize: "13px",
-                  color: "#fcfcfc",
-                  outline: "none",
-                  transition: "border-color 0.15s",
-                  fontFamily: "inherit",
+                  border: searchFocused ? "1px solid #a0ff79" : "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "8px", padding: "6px 10px 6px 30px",
+                  width: "180px", fontSize: "13px", color: "#fcfcfc",
+                  outline: "none", transition: "border-color 0.15s", fontFamily: "inherit",
                 }}
               />
             </div>
@@ -361,14 +268,8 @@ export default function CrmPage() {
         </div>
       </div>
 
-      {/* Table — fills remaining height */}
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          overflow: "auto",
-        }}
-      >
+      {/* Table */}
+      <div style={{ flex: 1, minHeight: 0, overflow: "auto" }}>
         <CrmTable rows={filteredRows} />
       </div>
     </div>
