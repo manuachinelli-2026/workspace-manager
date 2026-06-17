@@ -29,11 +29,11 @@ export interface CrmRow {
 
 export const TEAM_MEMBERS = [
   "All",
-  "Manuel A.",
-  "Santiago R.",
-  "Valentina L.",
-  "Nicolás B.",
-  "Camila T.",
+  "Lucia L.",
+  "Michelle H.",
+  "Aspasia H.",
+  "Carolina G.",
+  "Muralles",
 ];
 
 export const CRM_ROWS: CrmRow[] = [
@@ -52,7 +52,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇦🇷",
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "2",
@@ -69,7 +69,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Santiago R.",
+    assignedTo: "Michelle H.",
   },
   {
     id: "3",
@@ -86,7 +86,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "4",
@@ -103,7 +103,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Valentina L.",
+    assignedTo: "Aspasia H.",
   },
   {
     id: "5",
@@ -120,7 +120,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Santiago R.",
+    assignedTo: "Michelle H.",
   },
   {
     id: "6",
@@ -137,7 +137,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "7",
@@ -154,7 +154,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Nicolás B.",
+    assignedTo: "Carolina G.",
   },
   {
     id: "8",
@@ -171,7 +171,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇦🇷",
     email: null,
     tags: [],
-    assignedTo: "Valentina L.",
+    assignedTo: "Aspasia H.",
   },
   {
     id: "9",
@@ -188,7 +188,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "10",
@@ -205,7 +205,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Santiago R.",
+    assignedTo: "Michelle H.",
   },
   {
     id: "11",
@@ -222,7 +222,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "12",
@@ -239,7 +239,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇪🇸",
     email: "marlene@example.com",
     tags: [],
-    assignedTo: "Camila T.",
+    assignedTo: "Muralles",
   },
   {
     id: "13",
@@ -256,7 +256,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇲🇽",
     email: null,
     tags: [],
-    assignedTo: "Valentina L.",
+    assignedTo: "Aspasia H.",
   },
   {
     id: "14",
@@ -273,7 +273,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "15",
@@ -290,7 +290,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Nicolás B.",
+    assignedTo: "Carolina G.",
   },
   {
     id: "16",
@@ -307,7 +307,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇦🇷",
     email: null,
     tags: [],
-    assignedTo: "Santiago R.",
+    assignedTo: "Michelle H.",
   },
   {
     id: "17",
@@ -324,7 +324,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇦🇷",
     email: null,
     tags: [],
-    assignedTo: "Camila T.",
+    assignedTo: "Muralles",
   },
   {
     id: "18",
@@ -341,7 +341,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "19",
@@ -358,7 +358,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇪🇸",
     email: "flord@example.com",
     tags: [],
-    assignedTo: "Valentina L.",
+    assignedTo: "Aspasia H.",
   },
   {
     id: "20",
@@ -375,7 +375,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Nicolás B.",
+    assignedTo: "Carolina G.",
   },
   {
     id: "21",
@@ -392,7 +392,7 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: null,
     email: null,
     tags: [],
-    assignedTo: "Manuel A.",
+    assignedTo: "Lucia L.",
   },
   {
     id: "22",
@@ -409,6 +409,6 @@ export const CRM_ROWS: CrmRow[] = [
     regionFlag: "🇧🇷",
     email: "aspasia@humand.com",
     tags: ["Customer"],
-    assignedTo: "Santiago R.",
+    assignedTo: "Michelle H.",
   },
 ];

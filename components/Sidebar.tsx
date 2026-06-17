@@ -136,7 +136,7 @@ export default function Sidebar() {
             flexShrink: 0,
           }}
         >
-          MA
+          LL
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <p
@@ -150,7 +150,7 @@ export default function Sidebar() {
               lineHeight: 1.3,
             }}
           >
-            Manuel Achinelli
+            Lucia Leal
           </p>
           <span
             style={{
@@ -164,7 +164,7 @@ export default function Sidebar() {
               display: "inline-block",
             }}
           >
-            Admin
+            Owner
           </span>
         </div>
         <button

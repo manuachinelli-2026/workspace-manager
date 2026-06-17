@@ -38,18 +38,22 @@ const PLANS = {
 const CURRENT_PLAN = "workspace" as const;
 
 const LICENSE_ROWS = [
-  { name: "Manuel Achinelli",   initials: "MA", avatarRgb: "88, 184, 54",   license: "active" as const, voltCloud: true,  hubspot: true,  renewal: "Jul 15, 2026" },
-  { name: "Santiago Rodríguez", initials: "SR", avatarRgb: "71, 105, 134",  license: "active" as const, voltCloud: true,  hubspot: true,  renewal: "Jul 15, 2026" },
-  { name: "Valentina López",    initials: "VL", avatarRgb: "139, 92, 246",  license: "active" as const, voltCloud: true,  hubspot: false, renewal: "Jul 15, 2026" },
-  { name: "Nicolás Bravo",      initials: "NB", avatarRgb: "217, 119, 6",   license: "active" as const, voltCloud: false, hubspot: false, renewal: "Jul 15, 2026" },
-  { name: "Camila Torres",      initials: "CT", avatarRgb: "219, 39, 119",  license: "pending" as const, voltCloud: false, hubspot: false, renewal: null },
-  { name: "Martín Pérez",       initials: "MP", avatarRgb: "13, 148, 136",  license: "pending" as const, voltCloud: false, hubspot: false, renewal: null },
+  { name: "Lucia Leal",          initials: "LL", avatarRgb: "88, 184, 54",   license: "active" as const,  voltCloud: false, hubspot: true,  renewal: "Jul 15, 2026" },
+  { name: "Michelle H d A",      initials: "MH", avatarRgb: "59, 130, 246",  license: "active" as const,  voltCloud: false, hubspot: true,  renewal: "Jul 15, 2026" },
+  { name: "Humand",              initials: "HU", avatarRgb: "139, 92, 246",  license: "active" as const,  voltCloud: true,  hubspot: false, renewal: "Jul 15, 2026" },
+  { name: "Humand",              initials: "HU", avatarRgb: "13, 148, 136",  license: "active" as const,  voltCloud: false, hubspot: false, renewal: "Jul 15, 2026" },
+  { name: "Humand",              initials: "HU", avatarRgb: "217, 119, 6",   license: "active" as const,  voltCloud: true,  hubspot: false, renewal: "Jul 15, 2026" },
+  { name: "Muralles",            initials: "MU", avatarRgb: "234, 88, 12",   license: "pending" as const, voltCloud: false, hubspot: false, renewal: null },
+  { name: "+55 32 98164-313",    initials: "55", avatarRgb: "120, 124, 130", license: "pending" as const, voltCloud: true,  hubspot: false, renewal: null },
+  { name: "Aspasia | HUMAND",    initials: "AH", avatarRgb: "219, 39, 119",  license: "pending" as const, voltCloud: true,  hubspot: true,  renewal: null },
+  { name: "Carolina Giraldo",    initials: "CG", avatarRgb: "71, 105, 134",  license: "pending" as const, voltCloud: true,  hubspot: false, renewal: null },
+  { name: "Humand",              initials: "HU", avatarRgb: "88, 184, 54",   license: "pending" as const, voltCloud: true,  hubspot: false, renewal: null },
 ];
 
 const PAYMENT_HISTORY = [
-  { date: "Jun 15, 2026", amount: "$316.00", invoice: "INV-2026-06" },
-  { date: "May 15, 2026", amount: "$316.00", invoice: "INV-2026-05" },
-  { date: "Apr 15, 2026", amount: "$316.00", invoice: "INV-2026-04" },
+  { date: "Jun 15, 2026", amount: "$395.00", invoice: "INV-2026-06" },
+  { date: "May 15, 2026", amount: "$395.00", invoice: "INV-2026-05" },
+  { date: "Apr 15, 2026", amount: "$395.00", invoice: "INV-2026-04" },
 ];
 
 function CheckOrDash({ value }: { value: boolean }) {
