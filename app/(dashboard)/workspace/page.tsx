@@ -200,7 +200,7 @@ const TH: React.CSSProperties = { padding: "8px 12px", textAlign: "left", fontSi
 function SkeletonRow() {
   return (
     <tr>
-      {[200, 80, 130, 100, 80, 70, 80].map((w, i) => (
+      {[200, 80, 80, 130, 100, 80, 40, 80, 90, 80].map((w, i) => (
         <td key={i} style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
           <div style={{ height: "13px", width: `${w}px`, borderRadius: "6px", background: "rgba(255,255,255,0.06)", animation: "pulse 1.5s ease-in-out infinite" }} />
         </td>
@@ -376,11 +376,14 @@ export default function WorkspacePage() {
             <tr>
               <th style={TH}>Member</th>
               <th style={TH}>Role</th>
+              <th style={TH}>Status</th>
               <th style={TH}>Volt Cloud</th>
               <th style={TH}>HubSpot</th>
               <th style={TH}>License</th>
               <th style={TH}>Lists</th>
               <th style={TH}>Hours saved</th>
+              <th style={TH}>Last active</th>
+              <th style={TH}>Joined</th>
             </tr>
           </thead>
           <tbody>
@@ -403,16 +406,28 @@ export default function WorkspacePage() {
                         </div>
                       </td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: "13px", color: "rgba(252,252,252,0.6)" }}>{m.role}</td>
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "12px", fontWeight: 500, color: "#a0ff79" }}>
+                          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#a0ff79", display: "inline-block", flexShrink: 0 }} />
+                          Active
+                        </span>
+                      </td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}><VoltCloudCell value={m.voltCloud} /></td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}><HubSpotCell value={m.hubspot} /></td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                         {m.plan === "Premium" || m.plan === "Business" ? <Pill rgb="88, 184, 54" label={m.plan} icon="check_circle" /> : <Pill rgb="217, 119, 6" label="Free" />}
                       </td>
-                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: "13px", color: m.listCount > 0 ? "rgba(252,252,252,0.7)" : "rgba(252,252,252,0.25)" }}>
-                        {m.listCount > 0 ? m.listCount : "—"}
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: "13px", color: "rgba(252,252,252,0.6)" }}>
+                        {m.listCount}
                       </td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: "13px", color: m.hoursSaved != null ? "rgba(252,252,252,0.7)" : "rgba(252,252,252,0.25)" }}>
                         {m.hoursSaved != null ? `${m.hoursSaved}h` : "—"}
+                      </td>
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: "13px", color: m.lastActive ? "rgba(252,252,252,0.55)" : "rgba(252,252,252,0.2)" }}>
+                        {m.lastActive ?? "—"}
+                      </td>
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)", fontSize: "12px", color: "rgba(252,252,252,0.4)", whiteSpace: "nowrap" }}>
+                        {m.joinedAt || "—"}
                       </td>
                     </tr>
                   ))}
@@ -431,19 +446,41 @@ export default function WorkspacePage() {
                           </div>
                         </div>
                       </td>
+                      {/* Role */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
+                      {/* Status */}
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "12px", fontWeight: 500, color: "rgba(217,119,6,1)" }}>
+                          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "rgb(217,119,6)", display: "inline-block", flexShrink: 0 }} />
+                          Pending
+                        </span>
+                      </td>
+                      {/* Volt Cloud */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
+                      {/* HubSpot */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
+                      {/* License */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                         <Pill rgb="120, 124, 130" label="Waiting signup" />
                       </td>
+                      {/* Lists */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
+                      {/* Hours saved */}
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
+                      {/* Last active */}
+                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
+                      {/* Joined — show invite date + remove button */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                        <button onClick={() => removePending(inv.phone)} title="Remove pending invite" style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(252,252,252,0.25)", display: "flex", alignItems: "center", padding: "2px", borderRadius: "4px", transition: "color 0.12s" }}
-                          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(239,68,68,0.7)")}
-                          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.25)")}>
-                          <span className="material-symbols-outlined" style={{ fontSize: "15px" }}>close</span>
-                        </button>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <span style={{ fontSize: "12px", color: "rgba(252,252,252,0.3)" }}>
+                            {new Date(inv.addedAt).toLocaleDateString()}
+                          </span>
+                          <button onClick={() => removePending(inv.phone)} title="Remove" style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(252,252,252,0.2)", display: "flex", alignItems: "center", padding: "2px", borderRadius: "4px", transition: "color 0.12s" }}
+                            onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(239,68,68,0.7)")}
+                            onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(252,252,252,0.2)")}>
+                            <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>close</span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

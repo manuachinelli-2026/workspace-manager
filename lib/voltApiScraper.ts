@@ -56,13 +56,13 @@ function parseMembers(html: string): Array<{ userId: string; name: string; phone
     if (!userIdMatch) continue;
     const userId = userIdMatch[1];
 
-    // First cell: "Lucia Leal5493512336517 · Lucia Leal" or similar
+    // First cell text: "Lucia Leal 5493512336517 · Lucia Leal" or similar
+    // The name appears before and after the phone — take only the part before the phone.
     const nameCell = cells[0];
-    // Phone is a sequence of 10-15 digits
     const phoneMatch = nameCell.match(/\b(\d{10,15})\b/);
     const phone = phoneMatch?.[1] ?? "";
-    // Name is everything before the phone number
-    const name = nameCell.replace(phone, "").replace(/[·\s]+$/, "").replace(/[·\s]+/g, " ").trim().split("  ")[0] || nameCell.split(/\d{10}/)[0].trim();
+    const beforePhone = phone ? nameCell.substring(0, nameCell.indexOf(phone)) : nameCell;
+    const name = beforePhone.replace(/[·\s]+$/, "").replace(/\s+/g, " ").trim();
 
     const role = (cells[1] ?? "Member") as "Owner" | "Admin" | "Member";
     const joinedAt = cells[2] ?? "";
