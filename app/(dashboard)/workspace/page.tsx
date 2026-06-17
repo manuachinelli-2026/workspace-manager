@@ -200,7 +200,7 @@ const TH: React.CSSProperties = { padding: "8px 12px", textAlign: "left", fontSi
 function SkeletonRow() {
   return (
     <tr>
-      {[200, 80, 80, 130, 100, 80, 40, 80, 90, 80].map((w, i) => (
+      {[200, 80, 80, 130, 80, 40, 80, 90, 80].map((w, i) => (
         <td key={i} style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
           <div style={{ height: "13px", width: `${w}px`, borderRadius: "6px", background: "rgba(255,255,255,0.06)", animation: "pulse 1.5s ease-in-out infinite" }} />
         </td>
@@ -378,7 +378,6 @@ export default function WorkspacePage() {
               <th style={TH}>Role</th>
               <th style={TH}>Status</th>
               <th style={TH}>Volt Cloud</th>
-              <th style={TH}>HubSpot</th>
               <th style={TH}>License</th>
               <th style={TH}>Lists</th>
               <th style={TH}>Hours saved</th>
@@ -413,7 +412,6 @@ export default function WorkspacePage() {
                         </span>
                       </td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}><VoltCloudCell value={m.voltCloud} /></td>
-                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}><HubSpotCell value={m.hubspot} /></td>
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                         {m.plan === "Premium" || m.plan === "Business" ? <Pill rgb="88, 184, 54" label={m.plan} icon="check_circle" /> : <Pill rgb="217, 119, 6" label="Free" />}
                       </td>
@@ -456,8 +454,6 @@ export default function WorkspacePage() {
                         </span>
                       </td>
                       {/* Volt Cloud */}
-                      <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
-                      {/* HubSpot */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{DASH}</td>
                       {/* License */}
                       <td style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
